@@ -279,6 +279,7 @@
 		BC07A00B0EF72D360014EC61 /* objc-auto-dump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-auto-dump.h"; path = "runtime/objc-auto-dump.h"; sourceTree = "<group>"; };
 		BC07A0100EF72D9C0014EC61 /* objc-auto-dump.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "objc-auto-dump.mm"; path = "runtime/objc-auto-dump.mm"; sourceTree = "<group>"; };
 		BC8B5D1212D3D48100C78A5B /* libauto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libauto.dylib; path = /usr/lib/libauto.dylib; sourceTree = "<absolute>"; };
+		C867B82E1BEEEDE500BCBA03 /* CodeReadingNote.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = CodeReadingNote.rtf; sourceTree = "<group>"; };
 		D2AAC0630554660B00DB518D /* libobjc.A.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libobjc.A.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8923D9C116AB2820071B552 /* a1a2-blocktramps-i386.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = "a1a2-blocktramps-i386.s"; path = "runtime/a1a2-blocktramps-i386.s"; sourceTree = "<group>"; };
 		E8923D9D116AB2820071B552 /* a1a2-blocktramps-x86_64.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = "a1a2-blocktramps-x86_64.s"; path = "runtime/a1a2-blocktramps-x86_64.s"; sourceTree = "<group>"; };
@@ -358,7 +359,6 @@
 				838485DB0D6D68A200CEA253 /* objc-lockdebug.mm */,
 				83725F4914CA5BFA0014370E /* objc-opt.mm */,
 				831C85D40E10CF850066E64C /* objc-os.mm */,
-				831C85D40E10CF850066E64C /* objc-os.mm */,
 				393CEABF0DC69E3E000B69DE /* objc-references.mm */,
 				838485E10D6D68A200CEA253 /* objc-runtime-new.mm */,
 				838485E20D6D68A200CEA253 /* objc-runtime-old.mm */,
@@ -403,6 +403,7 @@
 				838485B50D6D683300CEA253 /* ReleaseNotes.rtf */,
 				838485B30D6D682B00CEA253 /* libobjc.order */,
 				83E50D2B0FF19E9E00D74C19 /* IndigoSDK.xcconfig */,
+				C867B82E1BEEEDE500BCBA03 /* CodeReadingNote.rtf */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -890,14 +891,28 @@
 				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"-lc++abi",
 					"-Wl,-segalign,0x4000",
-					"-Xlinker -sectalign -Xlinker __DATA -Xlinker __objc_data -Xlinker 0x1000",
+					"-Xlinker",
+					"-sectalign",
+					"-Xlinker",
+					__DATA,
+					"-Xlinker",
+					__objc_data,
+					"-Xlinker",
+					0x1000,
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=*]" = "-l_BUILD_objc-simulator_TARGET_INSTEAD";
 				"OTHER_LDFLAGS[sdk=macosx*]" = (
 					"-lCrashReporterClient",
 					"-lauto",
 					"-lc++abi",
-					"-Xlinker -sectalign -Xlinker __DATA -Xlinker __objc_data -Xlinker 0x1000",
+					"-Xlinker",
+					"-sectalign",
+					"-Xlinker",
+					__DATA,
+					"-Xlinker",
+					__objc_data,
+					"-Xlinker",
+					0x1000,
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/objc;
 				PRODUCT_NAME = objc.A;
@@ -929,14 +944,28 @@
 				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"-lc++abi",
 					"-Wl,-segalign,0x4000",
-					"-Xlinker -sectalign -Xlinker __DATA -Xlinker __objc_data -Xlinker 0x1000",
+					"-Xlinker",
+					"-sectalign",
+					"-Xlinker",
+					__DATA,
+					"-Xlinker",
+					__objc_data,
+					"-Xlinker",
+					0x1000,
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=*]" = "-l_BUILD_objc-simulator_TARGET_INSTEAD";
 				"OTHER_LDFLAGS[sdk=macosx*]" = (
 					"-lCrashReporterClient",
 					"-lauto",
 					"-lc++abi",
-					"-Xlinker -sectalign -Xlinker __DATA -Xlinker __objc_data -Xlinker 0x1000",
+					"-Xlinker",
+					"-sectalign",
+					"-Xlinker",
+					__DATA,
+					"-Xlinker",
+					__objc_data,
+					"-Xlinker",
+					0x1000,
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/objc;
 				PRODUCT_NAME = objc.A;
