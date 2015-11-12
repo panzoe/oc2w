@@ -187,7 +187,7 @@ OBJC_EXPORT id	(*_zoneCopy)(id, size_t, void *);
 
 /***********************************************************************
 * object_getClass.
-* Locking: None. If you add locking, tell gdb (rdar://7516456).
+* Locking: None. If you add locking, tell gdb (rdar://7516456 ).
 **********************************************************************/
 Class object_getClass(id obj)
 {

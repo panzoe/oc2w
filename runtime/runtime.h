@@ -40,16 +40,16 @@
 
     #if !OBJC_TYPES_DEFINED
 
-        /// An opaque type that represents a method in a class definition.
+        /// 定义新类型代表 在类中定义的方法。
         typedef struct objc_method *Method;
 
-        /// An opaque type that represents an instance variable.
+        /// 定义新类型代表 实例变量。
         typedef struct objc_ivar *Ivar;
 
-        /// An opaque type that represents a category.
+        /// 定义新类型代表 分类(category)。
         typedef struct objc_category *Category;
 
-        /// An opaque type that represents an Objective-C declared property.
+        /// 定义新类型代表 Objective-C 声明的属性(property)。
         typedef struct objc_property *objc_property_t;
 
         /** 根据此声明，凡是首地址是 Class 的 struct 都可被认为是 Objective-C 中的对象 **/
@@ -69,7 +69,7 @@
             //#endif
 
         } OBJC2_UNAVAILABLE;
-        /* Use `Class` instead of `struct objc_class *` */
+        /* 使用 `Class` 代替 `struct objc_class *` */
 
     #endif
 
