@@ -324,229 +324,213 @@
 //         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_3_1);
 
 
-    /* Working with Classes */
+    /* 操作 “类” 相关的函式 */
 
     /** 
-     * Returns the name of a class.
+     * 返回指定 “类” 的名称
      * 
-     * @param cls A class object.
+     * @param cls “类对象”
      * 
-     * @return The name of the class, or the empty string if \e cls is \c Nil.
+     * @return 类的名称，若 cls 为 Nil 则返回空字元串
      */
-    OBJC_EXPORT const char *class_getName(Class cls) 
+    OBJC_EXPORT const char *class_getName(Class cls);
 //         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a Boolean value that indicates whether a class object is a metaclass.
+     * 判断给定 “类对象” 是否是一个 “元类”
      * 
-     * @param cls A class object.
+     * @param cls “类对象”
      * 
-     * @return \c YES if \e cls is a metaclass, \c NO if \e cls is a non-meta class, 
-     *  \c NO if \e cls is \c Nil.
+     * @return 如 cls 是一个 “元类” 则返回 YES ， 若 cls 不是 “元类”，或者为 Nil 则返回 NO
      */
-    OBJC_EXPORT BOOL class_isMetaClass(Class cls) 
+    OBJC_EXPORT BOOL class_isMetaClass(Class cls);
 //         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the superclass of a class.
+     * 返回指定 “类” 的 “超类”
      * 
-     * @param cls A class object.
+     * @param cls “类对象”
      * 
-     * @return The superclass of the class, or \c Nil if
-     *  \e cls is a root class, or \c Nil if \e cls is \c Nil.
+     * @return 指定 “类” 的 “超类”，如 cls 是 “根类” 或者为 Nil 则返回 Nil
      *
-     * @note You should usually use \c NSObject's \c superclass method instead of this function.
+     * @note 通常情况下，应该使用 NSObject 的 superclass 方法来代替对此函式的调用
      */
-    OBJC_EXPORT Class class_getSuperclass(Class cls) 
+    OBJC_EXPORT Class class_getSuperclass(Class cls);
 //         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Sets the superclass of a given class.
+     * 设置给定 “类” 的 “超类”
      * 
-     * @param cls The class whose superclass you want to set.
-     * @param newSuper The new superclass for cls.
+     * @param cls 欲更换 “超类” 的 “类”
+     * @param newSuper cls 的新 “超类”
      * 
-     * @return The old superclass for cls.
+     * @return cls 的旧 “超类”
      * 
-     * @warning You should not use this function.
+     * @warning 通常情况下，不应使用此函式
      */
-    OBJC_EXPORT Class class_setSuperclass(Class cls, Class newSuper) 
+    OBJC_EXPORT Class class_setSuperclass(Class cls, Class newSuper);
 //         __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_5,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
 
     /** 
-     * Returns the version number of a class definition.
+     * 返回某个 “类定义” 的版本号
      * 
-     * @param cls A pointer to a \c Class data structure. Pass
-     *  the class definition for which you wish to obtain the version.
+     * @param cls 一个指向 Class 数据结构的指针。 用于传递想要获取版本号的 “类定义”
      * 
-     * @return An integer indicating the version number of the class definition.
+     * @return 用于指示 “类定义” 版本号的整数
      *
      * @see class_setVersion
      */
-    OBJC_EXPORT int class_getVersion(Class cls)
+    OBJC_EXPORT int class_getVersion(Class cls);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Sets the version number of a class definition.
+     * 设定 “类定义” 的版本号
      * 
-     * @param cls A pointer to an Class data structure. 
-     *  Pass the class definition for which you wish to set the version.
-     * @param version An integer. Pass the new version number of the class definition.
+     * @param cls 一个指向 Class 数据结构的指针。 用于传递想要设定版本号的 “类定义”
+     * @param version “类定义” 的新版本号
      *
-     * @note You can use the version number of the class definition to provide versioning of the
-     *  interface that your class represents to other classes. This is especially useful for object
-     *  serialization (that is, archiving of the object in a flattened form), where it is important to
-     *  recognize changes to the layout of the instance variables in different class-definition versions.
-     * @note Classes derived from the Foundation framework \c NSObject class can set the class-definition
-     *  version number using the \c setVersion: class method, which is implemented using the \c class_setVersion function.
+     * @note 通过 “类定义” 的版本号，可以对你提供给 “其它类” 的 “类” 提供版本化的接口
+     *       这在 “对象序列化” 时犹为有用（即，将对象以平面化格式进行归档），
+     *       通过 “类定义” 版本号的不同，可意识到其实例变量的布局已发生了变更
+     * @note 派生自 Foundation.framework 中 NSObject 的类
+     *       可通过 setVersion: 类级方法设置 “类定义” 的版本号，该方法也是通过 class_setVersion 函式实现的
      */
-    OBJC_EXPORT void class_setVersion(Class cls, int version)
+    OBJC_EXPORT void class_setVersion(Class cls, int version);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns the size of instances of a class.
+     * 返回指定 “类” 的实例大小
      * 
-     * @param cls A class object.
+     * @param cls “类对象“
      * 
-     * @return The size in bytes of instances of the class \e cls, or \c 0 if \e cls is \c Nil.
+     * @return 大小单位为 字节 ，若 cls 为 Nil 则返回 0
      */
-    OBJC_EXPORT size_t class_getInstanceSize(Class cls) 
+    OBJC_EXPORT size_t class_getInstanceSize(Class cls);
 //         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the \c Ivar for a specified instance variable of a given class.
+     * 返回给定 ”类“ 的指定实例变量
      * 
-     * @param cls The class whose instance variable you wish to obtain.
-     * @param name The name of the instance variable definition to obtain.
+     * @param cls 要获取实例变量的类
+     * @param name 要获取实例变量的名称
      * 
-     * @return A pointer to an \c Ivar data structure containing information about 
-     *  the instance variable specified by \e name.
+     * @return 一个指向 Ivar 数据结构的指针，该结构包含了指名实例变量的信息
      */
-    OBJC_EXPORT Ivar class_getInstanceVariable(Class cls, const char *name)
+    OBJC_EXPORT Ivar class_getInstanceVariable(Class cls, const char *name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns the Ivar for a specified class variable of a given class.
+     * 返回给定 ”类“ 的指定实例变量
      * 
-     * @param cls The class definition whose class variable you wish to obtain.
-     * @param name The name of the class variable definition to obtain.
+     * @param cls 要获取实例变量的类
+     * @param name 要获取实例变量的名称
      * 
-     * @return A pointer to an \c Ivar data structure containing information about the class variable specified by \e name.
+     * @return 一个指向 Ivar 数据结构的指针，该结构包含了指名实例变量的信息
      */
-    OBJC_EXPORT Ivar class_getClassVariable(Class cls, const char *name) 
+    OBJC_EXPORT Ivar class_getClassVariable(Class cls, const char *name);
 //         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Describes the instance variables declared by a class.
+     * 描述某个 ”类“ 定义的所有实例变量
      * 
-     * @param cls The class to inspect.
-     * @param outCount On return, contains the length of the returned array. 
-     *  If outCount is NULL, the length is not returned.
+     * @param cls 欲检阅的 ”类“
+     * @param 函式返回时 outCount 用于存放返回的阵列容量大小，如 outCount 为 NULL 则不返回阵列长度
      * 
-     * @return An array of pointers of type Ivar describing the instance variables declared by the class. 
-     *  Any instance variables declared by superclasses are not included. The array contains *outCount 
-     *  pointers followed by a NULL terminator. You must free the array with free().
+     * @return 一个 Ivar 类型的指针阵列，该阵列描述了该 ”类“ 声明的所有实例变量，
+     *         其中并不包含由 ”超类“ 声明的实例变量，阵列由一个 NULL 作为结尾，
+     *         必须使用 free() 函式来手工释放阵列占用记性体
      * 
-     *  If the class declares no instance variables, or cls is Nil, NULL is returned and *outCount is 0.
+     *  如该 ”类“ 并未声明任何实例变量，或 cls 为 Nil，则函式返回值为 NULL 且 *outCount 的值为 0
      */
-    OBJC_EXPORT Ivar *class_copyIvarList(Class cls, unsigned int *outCount) 
+    OBJC_EXPORT Ivar *class_copyIvarList(Class cls, unsigned int *outCount);
 //         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a specified instance method for a given class.
+     * 返回给定 ”类“ 的指定实例方法
      * 
-     * @param cls The class you want to inspect.
-     * @param name The selector of the method you want to retrieve.
+     * @param cls 欲检阅的 ”类“
+     * @param name 欲取回的方法的选择器
      * 
-     * @return The method that corresponds to the implementation of the selector specified by 
-     *  \e name for the class specified by \e cls, or \c NULL if the specified class or its 
-     *  superclasses do not contain an instance method with the specified selector.
+     * @return 在 ”类“ cls 中实现的匹配此选择器的方法，若该 ”类“ 或其 ”超类“ 均不存在匹配此选择器的方法则返回 NULL
      *
-     * @note This function searches superclasses for implementations, whereas \c class_copyMethodList does not.
+     * @note 此方法会尝试搜索其 ”超类“ 实现，而 class_copyMethodList 则不会
      */
-    OBJC_EXPORT Method class_getInstanceMethod(Class cls, SEL name)
+    OBJC_EXPORT Method class_getInstanceMethod(Class cls, SEL name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns a pointer to the data structure describing a given class method for a given class.
+     * 返回一个指向描述给定 ”类方法“ 的数据结构的指针
      * 
-     * @param cls A pointer to a class definition. Pass the class that contains the method you want to retrieve.
-     * @param name A pointer of type \c SEL. Pass the selector of the method you want to retrieve.
+     * @param cls 一个指向 ”类定义“ 的指针。传递一个包含欲取回方法的 ”类“
+     * @param name 一个 SEL 类型的指针。传递一个欲取回方法的选择器
      * 
-     * @return A pointer to the \c Method data structure that corresponds to the implementation of the 
-     *  selector specified by aSelector for the class specified by aClass, or NULL if the specified 
-     *  class or its superclasses do not contain an instance method with the specified selector.
+     * @return 一个指向该 ”类“ 中与此选择器匹配的方法的 Method 数据结构指针，
+     *         若该 ”类“ 或其 ”超类“ 均不存在匹配此选择器的方法则返回 NULL
      *
-     * @note Note that this function searches superclasses for implementations, 
-     *  whereas \c class_copyMethodList does not.
+     * @note 请注意，此方法会尝试搜索其 ”超类“ 实现，而 class_copyMethodList 则不会
      */
-    OBJC_EXPORT Method class_getClassMethod(Class cls, SEL name)
+    OBJC_EXPORT Method class_getClassMethod(Class cls, SEL name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns the function pointer that would be called if a 
-     * particular message were sent to an instance of a class.
+     * 返回一个向 ”类“ 实例发送消息时用于响应调用的函式指针
      * 
-     * @param cls The class you want to inspect.
-     * @param name A selector.
+     * @param cls 欲检阅的 ”类“
+     * @param name 选择器
      * 
-     * @return The function pointer that would be called if \c [object name] were called
-     *  with an instance of the class, or \c NULL if \e cls is \c Nil.
+     * @return 返回一个向 ”类“ 实例发送消息时用于响应调用的函式指针
+     *         通常是用于响应对某个 ”类“ 的实例发送消息 [object name] 的请求，若 cls 为 NULL 则返回 Nil
      *
-     * @note \c class_getMethodImplementation may be faster than \c method_getImplementation(class_getInstanceMethod(cls, name)).
-     * @note The function pointer returned may be a function internal to the runtime instead of
-     *  an actual method implementation. For example, if instances of the class do not respond to
-     *  the selector, the function pointer returned will be part of the runtime's message forwarding machinery.
+     * @note class_getMethodImplementation 的执行效率应该是快于 
+     *       method_getImplementation(class_getInstanceMethod(cls, name)) 的形式的
+     * @note 返回的函式指针有可能会是运行时内部函式，而不是一个实际的方法实现
+     *       例如，当该 ”类“ 实例无法响应该选择器，返回的函式指针将会是 ”运行时消息转发机制“ 的一部分
      */
-    OBJC_EXPORT IMP class_getMethodImplementation(Class cls, SEL name) 
+    OBJC_EXPORT IMP class_getMethodImplementation(Class cls, SEL name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the function pointer that would be called if a particular 
-     * message were sent to an instance of a class.
+     * 返回一个向 ”类“ 实例发送消息时用于响应调用的函式指针
      * 
-     * @param cls The class you want to inspect.
-     * @param name A selector.
+     * @param cls 欲检阅的 ”类“
+     * @param name 选择器
      * 
-     * @return The function pointer that would be called if \c [object name] were called
-     *  with an instance of the class, or \c NULL if \e cls is \c Nil.
+     * @return 返回一个向 ”类“ 实例发送消息时用于响应调用的函式指针
+     *         通常是用于响应对某个 ”类“ 的实例发送消息 [object name] 的请求，若 cls 为 NULL 则返回 Nil
      */
     OBJC_EXPORT IMP class_getMethodImplementation_stret(Class cls, SEL name) 
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
          OBJC_ARM64_UNAVAILABLE;
 
     /** 
-     * Returns a Boolean value that indicates whether instances of a class respond to a particular selector.
+     * 判断指定的 ”类“ 实例是否能够响应特定的选择器
      * 
-     * @param cls The class you want to inspect.
-     * @param sel A selector.
+     * @param cls 欲检阅的 ”类“
+     * @param sel 选择器
      * 
-     * @return \c YES if instances of the class respond to the selector, otherwise \c NO.
+     * @return 若 ”类“ 实例能响应该选择器则返回 YES ，否则返回 NO
      * 
-     * @note You should usually use \c NSObject's \c respondsToSelector: or \c instancesRespondToSelector: 
-     *  methods instead of this function.
+     * @note 通常情况下，应该优先使用 NSObject 的 respondsToSelector: 或 instancesRespondToSelector: 方法
      */
-    OBJC_EXPORT BOOL class_respondsToSelector(Class cls, SEL sel) 
+    OBJC_EXPORT BOOL class_respondsToSelector(Class cls, SEL sel);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Describes the instance methods implemented by a class.
+     * 描述某个 ”类“ 所有的 已实现的实例方法
      * 
-     * @param cls The class you want to inspect.
-     * @param outCount On return, contains the length of the returned array. 
-     *  If outCount is NULL, the length is not returned.
+     * @param cls 欲检阅的 ”类“
+     * @param outCount 函式返回时 outCount 用于存放返回的阵列容量大小，如 outCount 为 NULL 则不返回阵列长度
      * 
-     * @return An array of pointers of type Method describing the instance methods 
-     *  implemented by the class—any instance methods implemented by superclasses are not included. 
-     *  The array contains *outCount pointers followed by a NULL terminator. You must free the array with free().
+     * @return 一个指向由该 ”类“ 实现的所有实例方法指针阵列
+     *         任何由 ”超类“ 声明的实例方法，阵列由一个 NULL 作为结尾，
+     *         必须使用 free() 函式来手工释放阵列占用记性体
      * 
-     *  If cls implements no instance methods, or cls is Nil, returns NULL and *outCount is 0.
+     *  如该 ”类“ 并未声明任何实例方法，或 cls 为 Nil，则函式返回值为 NULL 且 *outCount 的值为 0
      * 
-     * @note To get the class methods of a class, use \c class_copyMethodList(object_getClass(cls), &count).
-     * @note To get the implementations of methods that may be implemented by superclasses, 
-     *  use \c class_getInstanceMethod or \c class_getClassMethod.
+     * @note 如欲获取 ”类“ 方法，须使用 class_copyMethodList(object_getClass(cls), &count) 函式
+     * @note 如需获取由 ”超类“ 已实现的 ”方法实现“ 则应使用 class_getInstanceMethod 或 class_getClassMethod 函式
      */
-    OBJC_EXPORT Method *class_copyMethodList(Class cls, unsigned int *outCount) 
+    OBJC_EXPORT Method *class_copyMethodList(Class cls, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
