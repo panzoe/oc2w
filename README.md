@@ -7,3 +7,6 @@ libobjc2 源码学习笔记
 + [Objective-C 中的消息与消息转发](http://blog.ibireme.com/2013/11/26/objective-c-messaging/)
 + [一些特殊的数据类型 id、nil、Nil、SEL ，IMP](http://www.cnblogs.com/iCocos/p/4538558.html)
 + [Nil and nil](http://unixjunkie.blogspot.jp/2006/02/nil-and-nil.html "网路上关于特殊数据类型的中文文章可能都源自这一篇英文原文")
++ [Objective-C的方法替换](http://blog.csdn.net/horkychen/article/details/8532087 "class_addMethod,class_replaceMethod,method_setImplementation")
++ [ObjectiveC基础－ivar是什么意思](http://blog.csdn.net/lvxiangan/article/details/18816481 "简要说明Objective-C运行时定义的几种重要的类型")
++ [respondsToSelector的相关使用](http://blog.csdn.net/chengyingzhilian/article/details/7930398 "respondsToSelector")
