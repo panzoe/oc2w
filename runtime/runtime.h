@@ -522,7 +522,7 @@
      * @param outCount 函式返回时 outCount 用于存放返回的阵列容量大小，如 outCount 为 NULL 则不返回阵列长度
      * 
      * @return 一个指向由该 ”类“ 实现的所有实例方法指针阵列
-     *         任何由 ”超类“ 声明的实例方法，阵列由一个 NULL 作为结尾，
+     *         任何由 ”超类“ 声明的实例方法均未包含在其中，阵列由一个 NULL 作为结尾，
      *         必须使用 free() 函式来手工释放阵列占用记性体
      * 
      *  如该 ”类“ 并未声明任何实例方法，或 cls 为 Nil，则函式返回值为 NULL 且 *outCount 的值为 0
@@ -534,122 +534,114 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a Boolean value that indicates whether a class conforms to a given protocol.
+     * 判断某个 ”类“ 是否符合给定的 ”协议“
      * 
-     * @param cls The class you want to inspect.
-     * @param protocol A protocol.
+     * @param cls 欲检阅的 ”类“
+     * @param protocol ”协议“
      *
-     * @return YES if cls conforms to protocol, otherwise NO.
+     * @return 则符合则返回 YES 否则返回 NO
      *
-     * @note You should usually use NSObject's conformsToProtocol: method instead of this function.
+     * @note 通常应优先使用 NSObject 的 conformsToProtocol: 方法
      */
-    OBJC_EXPORT BOOL class_conformsToProtocol(Class cls, Protocol *protocol) 
+    OBJC_EXPORT BOOL class_conformsToProtocol(Class cls, Protocol *protocol);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Describes the protocols adopted by a class.
+     * 描述某个 ”类“ 采用的 ”协议“
      * 
-     * @param cls The class you want to inspect.
-     * @param outCount On return, contains the length of the returned array. 
-     *  If outCount is NULL, the length is not returned.
+     * @param cls 欲检阅的 ”类“
+     * @param outCount 函式返回时 outCount 用于存放返回的阵列容量大小，如 outCount 为 NULL 则不返回阵列长度
      * 
-     * @return An array of pointers of type Protocol* describing the protocols adopted 
-     *  by the class. Any protocols adopted by superclasses or other protocols are not included. 
-     *  The array contains *outCount pointers followed by a NULL terminator. You must free the array with free().
+     * @return 一个指向描述该类采用的所有 ”协议“ 的 Protocol* 型指针列表
+     *         任何由 ”超类“ 采用或间接采用的 ”协议“ 均未包含在其中
+     *         阵列由一个 NULL 作为结尾，必须使用 free() 函式来手工释放阵列占用记性体
      * 
-     *  If cls adopts no protocols, or cls is Nil, returns NULL and *outCount is 0.
+     *  若 cls 为 Nil 或未采用任何 ”协议“，则返回 NULL 且 *outCount 值为 0
      */
-    OBJC_EXPORT Protocol * __unsafe_unretained *class_copyProtocolList(Class cls, unsigned int *outCount)
+    OBJC_EXPORT Protocol * __unsafe_unretained *class_copyProtocolList(Class cls, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a property with a given name of a given class.
+     * 返回给定 ”类“ 的指名 ”属性“
      * 
-     * @param cls The class you want to inspect.
-     * @param name The name of the property you want to inspect.
+     * @param cls 欲检阅的 ”类“
+     * @param name 要获取的 ”属性“ 的名称
      * 
-     * @return A pointer of type \c objc_property_t describing the property, or
-     *  \c NULL if the class does not declare a property with that name, 
-     *  or \c NULL if \e cls is \c Nil.
+     * @return 一个用于描述 ”属性“ 的 objc_property_t 类型指针，
+     *         若 cls 为 Nil ，或者该 ”类“ 未声明该指名 ”属性“ 则返回 NULL
      */
-    OBJC_EXPORT objc_property_t class_getProperty(Class cls, const char *name)
+    OBJC_EXPORT objc_property_t class_getProperty(Class cls, const char *name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Describes the properties declared by a class.
+     * 描述指定 ”类“ 声明的所有 ”属性“
      * 
-     * @param cls The class you want to inspect.
-     * @param outCount On return, contains the length of the returned array. 
-     *  If \e outCount is \c NULL, the length is not returned.        
+     * @param cls 欲检阅的 ”类“
+     * @param outCount 函式返回时 outCount 用于存放返回的阵列容量大小，如 outCount 为 NULL 则不返回阵列长度
      * 
-     * @return An array of pointers of type \c objc_property_t describing the properties 
-     *  declared by the class. Any properties declared by superclasses are not included. 
-     *  The array contains \c *outCount pointers followed by a \c NULL terminator. You must free the array with \c free().
+     * @return 一个指向描述该 ”类“ 声明的所有 ”属性“ 的 objc_property_t 类型指针列表
+     *         任何由 ”超类“ 声明的 ”属性“ 均未包含在其中，阵列由一个 NULL 作为结尾，
+     *         必须使用 free() 函式来手工释放阵列占用记性体
      * 
-     *  If \e cls declares no properties, or \e cls is \c Nil, returns \c NULL and \c *outCount is \c 0.
+     *  若 cls 为 Nil 或未声明任何 ”属性“，则返回 NULL 且 *outCount 值为 0
      */
-    OBJC_EXPORT objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount)
+    OBJC_EXPORT objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a description of the \c Ivar layout for a given class.
+     * 返回给定 ”类“ 的实例变量 布局描述
      * 
-     * @param cls The class to inspect.
+     * @param cls 欲检阅的 ”类“
      * 
-     * @return A description of the \c Ivar layout for \e cls.
+     * @return ”类“ 的实例变量（Ivars） 布局描述
      */
-    OBJC_EXPORT const uint8_t *class_getIvarLayout(Class cls)
+    OBJC_EXPORT const uint8_t *class_getIvarLayout(Class cls);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a description of the layout of weak Ivars for a given class.
+     * 返回给定 ”类“ 的 ”弱实例变量“ 布局描述
      * 
-     * @param cls The class to inspect.
+     * @param cls 欲检阅的 ”类“
      * 
-     * @return A description of the layout of the weak \c Ivars for \e cls.
+     * @return ”类“ 的 ”弱实例变量“（weak Ivars） 布局描述
      */
-    OBJC_EXPORT const uint8_t *class_getWeakIvarLayout(Class cls)
+    OBJC_EXPORT const uint8_t *class_getWeakIvarLayout(Class cls);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Adds a new method to a class with a given name and implementation.
+     * 为 ”类“ 添加一个新的指名方法实现
      * 
-     * @param cls The class to which to add a method.
-     * @param name A selector that specifies the name of the method being added.
-     * @param imp A function which is the implementation of the new method. The function must take at least two arguments—self and _cmd.
-     * @param types An array of characters that describe the types of the arguments to the method. 
+     * @param cls 欲添加方法的 ”类“
+     * @param name 要添加方法的指名选择器
+     * @param imp 新方法的实现。此函式必须至少接受两个参数：self 及 _cmd
+     * @param types 一个用于描述方法参数类型的字元阵列
      * 
-     * @return YES if the method was added successfully, otherwise NO 
-     *  (for example, the class already contains a method implementation with that name).
+     * @return 添加成功返回 YES，否则返回 NO （例如，该 ”类“ 已包含了指名相同的方法实现）
      *
-     * @note class_addMethod will add an override of a superclass's implementation, 
-     *  but will not replace an existing implementation in this class. 
-     *  To change an existing implementation, use method_setImplementation.
+     * @note class_addMethod 可以添加一个针对 ”超类“ 实现的重写，而不会替换此 ”类“ 当前已存在的实现
+     *       如需改变现有的实现，请使用 method_setImplementation 函式
      */
-    OBJC_EXPORT BOOL class_addMethod(Class cls, SEL name, IMP imp, 
-                                     const char *types) 
+    OBJC_EXPORT BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Replaces the implementation of a method for a given class.
+     * 为 ”类“ 替换一个指名方法的实现
      * 
-     * @param cls The class you want to modify.
-     * @param name A selector that identifies the method whose implementation you want to replace.
-     * @param imp The new implementation for the method identified by name for the class identified by cls.
-     * @param types An array of characters that describe the types of the arguments to the method. 
-     *  Since the function must take at least two arguments—self and _cmd, the second and third characters
-     *  must be “@:” (the first character is the return type).
+     * @param cls 欲替换方法的 ”类“
+     * @param name 要替换其实现的指名方法选择器
+     * @param imp 要替换方法的新实现
+     * @param types 一个用于描述方法参数类型的字元阵列
+     *  由于函式必须至少接受两个参数：self 及 _cmd，所以第二三位字元必然是 “@:” （第一个字元表示返回值类型）
      * 
-     * @return The previous implementation of the method identified by \e name for the class identified by \e cls.
+     * @return 此指名方法的前一个实现
      * 
-     * @note This function behaves in two different ways:
-     *  - If the method identified by \e name does not yet exist, it is added as if \c class_addMethod were called. 
-     *    The type encoding specified by \e types is used as given.
-     *  - If the method identified by \e name does exist, its \c IMP is replaced as if \c method_setImplementation were called.
-     *    The type encoding specified by \e types is ignored.
+     * @note 引函式行为上有两点不同：
+     *  - 如果该方法指名尚不存在，则会调用 class_addMethod 添加该方法实现，
+     *    types 提供的类型编码会如期待地被使用
+     *  - 如果该方法指名尚已存在，则会调用 method_setImplementation 替换方法实现，
+     *    types 提供的类型编码会被忽略
      */
-    OBJC_EXPORT IMP class_replaceMethod(Class cls, SEL name, IMP imp, 
-                                        const char *types) 
+    OBJC_EXPORT IMP class_replaceMethod(Class cls, SEL name, IMP imp, const char *types);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
