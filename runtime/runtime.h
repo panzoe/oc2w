@@ -22,23 +22,23 @@
  */
 
 #ifndef _OBJC_RUNTIME_H
-#define _OBJC_RUNTIME_H
+#   define _OBJC_RUNTIME_H
 
-    #include <objc/objc.h>
-    #include <stdarg.h>
-    #include <stdint.h>
-    #include <stddef.h>
-    #include <Availability.h>
-    #include <TargetConditionals.h>
+#   include <objc/objc.h>
+#   include <stdarg.h>
+#   include <stdint.h>
+#   include <stddef.h>
+#   include <Availability.h>
+#   include <TargetConditionals.h>
 
-    #if TARGET_OS_MAC
-    #include <sys/types.h>
-    #endif
+#   if TARGET_OS_MAC
+#       include <sys/types.h>
+#   endif
 
 
     /* Types */
 
-    #if !OBJC_TYPES_DEFINED
+#   if !OBJC_TYPES_DEFINED
 
         /// 定义新类型代表 在类中定义的方法。
         typedef struct objc_method *Method;
@@ -56,28 +56,28 @@
         struct objc_class {
             Class isa  OBJC_ISA_AVAILABILITY;
 
-            //#if !__OBJC2__
-            //    Class super_class                                        OBJC2_UNAVAILABLE;
-            //    const char *name                                         OBJC2_UNAVAILABLE;
-            //    long version                                             OBJC2_UNAVAILABLE;
-            //    long info                                                OBJC2_UNAVAILABLE;
-            //    long instance_size                                       OBJC2_UNAVAILABLE;
-            //    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
-            //    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
-            //    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
-            //    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
-            //#endif
+//#           if !__OBJC2__
+//                Class super_class                                        OBJC2_UNAVAILABLE;
+//                const char *name                                         OBJC2_UNAVAILABLE;
+//                long version                                             OBJC2_UNAVAILABLE;
+//                long info                                                OBJC2_UNAVAILABLE;
+//                long instance_size                                       OBJC2_UNAVAILABLE;
+//                struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
+//                struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
+//                struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
+//                struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+//#           endif
 
         } OBJC2_UNAVAILABLE;
         /* 使用 `Class` 代替 `struct objc_class *` */
 
-    #endif
+#   endif
 
-    #ifdef __OBJC__
+#   ifdef __OBJC__
         @class Protocol;
-    #else
+#   else
         typedef struct objc_object Protocol;
-    #endif
+#   endif
 
     /// Defines a method
     struct objc_method_description {
@@ -1524,208 +1524,209 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
 
-    #define _C_ID       '@'
-    #define _C_CLASS    '#'
-    #define _C_SEL      ':'
-    #define _C_CHR      'c'
-    #define _C_UCHR     'C'
-    #define _C_SHT      's'
-    #define _C_USHT     'S'
-    #define _C_INT      'i'
-    #define _C_UINT     'I'
-    #define _C_LNG      'l'
-    #define _C_ULNG     'L'
-    #define _C_LNG_LNG  'q'
-    #define _C_ULNG_LNG 'Q'
-    #define _C_FLT      'f'
-    #define _C_DBL      'd'
-    #define _C_BFLD     'b'
-    #define _C_BOOL     'B'
-    #define _C_VOID     'v'
-    #define _C_UNDEF    '?'
-    #define _C_PTR      '^'
-    #define _C_CHARPTR  '*'
-    #define _C_ATOM     '%'
-    #define _C_ARY_B    '['
-    #define _C_ARY_E    ']'
-    #define _C_UNION_B  '('
-    #define _C_UNION_E  ')'
-    #define _C_STRUCT_B '{'
-    #define _C_STRUCT_E '}'
-    #define _C_VECTOR   '!'
-    #define _C_CONST    'r'
+#   define _C_ID       '@'
+#   define _C_CLASS    '#'
+#   define _C_SEL      ':'
+#   define _C_CHR      'c'
+#   define _C_UCHR     'C'
+#   define _C_SHT      's'
+#   define _C_USHT     'S'
+#   define _C_INT      'i'
+#   define _C_UINT     'I'
+#   define _C_LNG      'l'
+#   define _C_ULNG     'L'
+#   define _C_LNG_LNG  'q'
+#   define _C_ULNG_LNG 'Q'
+#   define _C_FLT      'f'
+#   define _C_DBL      'd'
+#   define _C_BFLD     'b'
+#   define _C_BOOL     'B'
+#   define _C_VOID     'v'
+#   define _C_UNDEF    '?'
+#   define _C_PTR      '^'
+#   define _C_CHARPTR  '*'
+#   define _C_ATOM     '%'
+#   define _C_ARY_B    '['
+#   define _C_ARY_E    ']'
+#   define _C_UNION_B  '('
+#   define _C_UNION_E  ')'
+#   define _C_STRUCT_B '{'
+#   define _C_STRUCT_E '}'
+#   define _C_VECTOR   '!'
+#   define _C_CONST    'r'
 
 
-    /* Obsolete types */
+    /* 过时的类型 */
 
-    #if !__OBJC2__
+//#   if !__OBJC2__
+//
+//#       define CLS_GETINFO(cls,infomask)        ((cls)->info & (infomask))
+//#       define CLS_SETINFO(cls,infomask)        ((cls)->info |= (infomask))
+//
+//        // class is not a metaclass
+//#       define CLS_CLASS               0x1
+//        // class is a metaclass
+//#       define CLS_META                0x2
+//        // class's +initialize method has completed
+//#       define CLS_INITIALIZED         0x4
+//        // class is posing
+//#       define CLS_POSING              0x8
+//        // unused
+//#       define CLS_MAPPED              0x10
+//        // class and subclasses need cache flush during image loading
+//#       define CLS_FLUSH_CACHE         0x20
+//        // method cache should grow when full
+//#       define CLS_GROW_CACHE          0x40
+//        // unused
+//#       define CLS_NEED_BIND           0x80
+//        // methodLists is array of method lists
+//#       define CLS_METHOD_ARRAY        0x100
+//        // the JavaBridge constructs classes with these markers
+//#       define CLS_JAVA_HYBRID         0x200
+//#       define CLS_JAVA_CLASS          0x400
+//        // thread-safe +initialize
+//#       define CLS_INITIALIZING        0x800
+//        // bundle unloading
+//#       define CLS_FROM_BUNDLE         0x1000
+//        // C++ ivar support
+//#       define CLS_HAS_CXX_STRUCTORS   0x2000
+//        // Lazy method list arrays
+//#       define CLS_NO_METHOD_ARRAY     0x4000
+//        // +load implementation
+//#       define CLS_HAS_LOAD_METHOD     0x8000
+//        // objc_allocateClassPair API
+//#       define CLS_CONSTRUCTING        0x10000
+//        // class compiled with bigger class structure
+//#       define CLS_EXT                 0x20000
+//
+//
+//        struct objc_method_description_list {
+//                int count;
+//                struct objc_method_description list[1];
+//        };
+//
+//
+//        struct objc_protocol_list {
+//            struct objc_protocol_list *next;
+//            long count;
+//            Protocol *list[1];
+//        };
+//
+//
+//        struct objc_category {
+//            char *category_name                                      OBJC2_UNAVAILABLE;
+//            char *class_name                                         OBJC2_UNAVAILABLE;
+//            struct objc_method_list *instance_methods                OBJC2_UNAVAILABLE;
+//            struct objc_method_list *class_methods                   OBJC2_UNAVAILABLE;
+//            struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//
+//        struct objc_ivar {
+//            char *ivar_name                                          OBJC2_UNAVAILABLE;
+//            char *ivar_type                                          OBJC2_UNAVAILABLE;
+//            int ivar_offset                                          OBJC2_UNAVAILABLE;
+//#           ifdef __LP64__
+//                int space                                            OBJC2_UNAVAILABLE;
+//#           endif
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//        struct objc_ivar_list {
+//            int ivar_count                                           OBJC2_UNAVAILABLE;
+//#           ifdef __LP64__
+//                int space                                            OBJC2_UNAVAILABLE;
+//#           endif
+//            /* variable length structure */
+//            struct objc_ivar ivar_list[1]                            OBJC2_UNAVAILABLE;
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//
+//        struct objc_method {
+//            SEL method_name                                          OBJC2_UNAVAILABLE;
+//            char *method_types                                       OBJC2_UNAVAILABLE;
+//            IMP method_imp                                           OBJC2_UNAVAILABLE;
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//        struct objc_method_list {
+//            struct objc_method_list *obsolete                        OBJC2_UNAVAILABLE;
+//
+//            int method_count                                         OBJC2_UNAVAILABLE;
+//#           ifdef __LP64__
+//                int space                                            OBJC2_UNAVAILABLE;
+//#           endif
+//            /* variable length structure */
+//            struct objc_method method_list[1]                        OBJC2_UNAVAILABLE;
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//
+//        typedef struct objc_symtab *Symtab                           OBJC2_UNAVAILABLE;
+//
+//        struct objc_symtab {
+//            unsigned long sel_ref_cnt                                OBJC2_UNAVAILABLE;
+//            SEL *refs                                                OBJC2_UNAVAILABLE;
+//            unsigned short cls_def_cnt                               OBJC2_UNAVAILABLE;
+//            unsigned short cat_def_cnt                               OBJC2_UNAVAILABLE;
+//            void *defs[1] /* variable size */                        OBJC2_UNAVAILABLE;
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//
+//        typedef struct objc_cache *Cache                             OBJC2_UNAVAILABLE;
+//
+//#       define CACHE_BUCKET_NAME(B)  ((B)->method_name)
+//#       define CACHE_BUCKET_IMP(B)   ((B)->method_imp)
+//#       define CACHE_BUCKET_VALID(B) (B)
+//#       ifndef __LP64__
+//#           define CACHE_HASH(sel, mask) (((uintptr_t)(sel)>>2) & (mask))
+//#       else
+//#           define CACHE_HASH(sel, mask) (((unsigned int)((uintptr_t)(sel)>>3)) & (mask))
+//#       endif
+//        struct objc_cache {
+//            unsigned int mask /* total = mask + 1 */                 OBJC2_UNAVAILABLE;
+//            unsigned int occupied                                    OBJC2_UNAVAILABLE;
+//            Method buckets[1]                                        OBJC2_UNAVAILABLE;
+//        };
+//
+//
+//        typedef struct objc_module *Module                           OBJC2_UNAVAILABLE;
+//
+//        struct objc_module {
+//            unsigned long version                                    OBJC2_UNAVAILABLE;
+//            unsigned long size                                       OBJC2_UNAVAILABLE;
+//            const char *name                                         OBJC2_UNAVAILABLE;
+//            Symtab symtab                                            OBJC2_UNAVAILABLE;
+//        }                                                            OBJC2_UNAVAILABLE;
+//
+//#   else
 
-    #define CLS_GETINFO(cls,infomask)        ((cls)->info & (infomask))
-    #define CLS_SETINFO(cls,infomask)        ((cls)->info |= (infomask))
+        struct objc_method_list;
 
-    // class is not a metaclass
-    #define CLS_CLASS               0x1
-    // class is a metaclass
-    #define CLS_META                0x2
-    // class's +initialize method has completed
-    #define CLS_INITIALIZED         0x4
-    // class is posing
-    #define CLS_POSING              0x8
-    // unused
-    #define CLS_MAPPED              0x10
-    // class and subclasses need cache flush during image loading
-    #define CLS_FLUSH_CACHE         0x20
-    // method cache should grow when full
-    #define CLS_GROW_CACHE          0x40
-    // unused
-    #define CLS_NEED_BIND           0x80
-    // methodLists is array of method lists
-    #define CLS_METHOD_ARRAY        0x100
-    // the JavaBridge constructs classes with these markers
-    #define CLS_JAVA_HYBRID         0x200
-    #define CLS_JAVA_CLASS          0x400
-    // thread-safe +initialize
-    #define CLS_INITIALIZING        0x800
-    // bundle unloading
-    #define CLS_FROM_BUNDLE         0x1000
-    // C++ ivar support
-    #define CLS_HAS_CXX_STRUCTORS   0x2000
-    // Lazy method list arrays
-    #define CLS_NO_METHOD_ARRAY     0x4000
-    // +load implementation
-    #define CLS_HAS_LOAD_METHOD     0x8000
-    // objc_allocateClassPair API
-    #define CLS_CONSTRUCTING        0x10000
-    // class compiled with bigger class structure
-    #define CLS_EXT                 0x20000
+//#   endif
 
 
-    struct objc_method_description_list {
-            int count;
-            struct objc_method_description list[1];
-    };
+    /* 过时的函式 */
 
-
-    struct objc_protocol_list {
-        struct objc_protocol_list *next;
-        long count;
-        Protocol *list[1];
-    };
-
-
-    struct objc_category {
-        char *category_name                                      OBJC2_UNAVAILABLE;
-        char *class_name                                         OBJC2_UNAVAILABLE;
-        struct objc_method_list *instance_methods                OBJC2_UNAVAILABLE;
-        struct objc_method_list *class_methods                   OBJC2_UNAVAILABLE;
-        struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
-    }                                                            OBJC2_UNAVAILABLE;
-
-
-    struct objc_ivar {
-        char *ivar_name                                          OBJC2_UNAVAILABLE;
-        char *ivar_type                                          OBJC2_UNAVAILABLE;
-        int ivar_offset                                          OBJC2_UNAVAILABLE;
-    #ifdef __LP64__
-        int space                                                OBJC2_UNAVAILABLE;
-    #endif
-    }                                                            OBJC2_UNAVAILABLE;
-
-    struct objc_ivar_list {
-        int ivar_count                                           OBJC2_UNAVAILABLE;
-    #ifdef __LP64__
-        int space                                                OBJC2_UNAVAILABLE;
-    #endif
-        /* variable length structure */
-        struct objc_ivar ivar_list[1]                            OBJC2_UNAVAILABLE;
-    }                                                            OBJC2_UNAVAILABLE;
-
-
-    struct objc_method {
-        SEL method_name                                          OBJC2_UNAVAILABLE;
-        char *method_types                                       OBJC2_UNAVAILABLE;
-        IMP method_imp                                           OBJC2_UNAVAILABLE;
-    }                                                            OBJC2_UNAVAILABLE;
-
-    struct objc_method_list {
-        struct objc_method_list *obsolete                        OBJC2_UNAVAILABLE;
-
-        int method_count                                         OBJC2_UNAVAILABLE;
-    #ifdef __LP64__
-        int space                                                OBJC2_UNAVAILABLE;
-    #endif
-        /* variable length structure */
-        struct objc_method method_list[1]                        OBJC2_UNAVAILABLE;
-    }                                                            OBJC2_UNAVAILABLE;
-
-
-    typedef struct objc_symtab *Symtab                           OBJC2_UNAVAILABLE;
-
-    struct objc_symtab {
-        unsigned long sel_ref_cnt                                OBJC2_UNAVAILABLE;
-        SEL *refs                                                OBJC2_UNAVAILABLE;
-        unsigned short cls_def_cnt                               OBJC2_UNAVAILABLE;
-        unsigned short cat_def_cnt                               OBJC2_UNAVAILABLE;
-        void *defs[1] /* variable size */                        OBJC2_UNAVAILABLE;
-    }                                                            OBJC2_UNAVAILABLE;
-
-
-    typedef struct objc_cache *Cache                             OBJC2_UNAVAILABLE;
-
-    #define CACHE_BUCKET_NAME(B)  ((B)->method_name)
-    #define CACHE_BUCKET_IMP(B)   ((B)->method_imp)
-    #define CACHE_BUCKET_VALID(B) (B)
-    #ifndef __LP64__
-    #define CACHE_HASH(sel, mask) (((uintptr_t)(sel)>>2) & (mask))
-    #else
-    #define CACHE_HASH(sel, mask) (((unsigned int)((uintptr_t)(sel)>>3)) & (mask))
-    #endif
-    struct objc_cache {
-        unsigned int mask /* total = mask + 1 */                 OBJC2_UNAVAILABLE;
-        unsigned int occupied                                    OBJC2_UNAVAILABLE;
-        Method buckets[1]                                        OBJC2_UNAVAILABLE;
-    };
-
-
-    typedef struct objc_module *Module                           OBJC2_UNAVAILABLE;
-
-    struct objc_module {
-        unsigned long version                                    OBJC2_UNAVAILABLE;
-        unsigned long size                                       OBJC2_UNAVAILABLE;
-        const char *name                                         OBJC2_UNAVAILABLE;
-        Symtab symtab                                            OBJC2_UNAVAILABLE;
-    }                                                            OBJC2_UNAVAILABLE;
-
-    #else
-
-    struct objc_method_list;
-
-    #endif
-
-
-    /* Obsolete functions */
-
-    OBJC_EXPORT IMP class_lookupMethod(Class cls, SEL sel) 
-        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
-    OBJC_EXPORT BOOL class_respondsToMethod(Class cls, SEL sel)
-        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
-    OBJC_EXPORT void _objc_flush_caches(Class cls) 
-        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
+    OBJC_EXPORT IMP class_lookupMethod(Class cls, SEL sel);
+//        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
+    OBJC_EXPORT BOOL class_respondsToMethod(Class cls, SEL sel);
+//        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
+    OBJC_EXPORT void _objc_flush_caches(Class cls);
+//        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
 
     OBJC_EXPORT id object_copyFromZone(id anObject, size_t nBytes, void *z) 
-        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_NA,__IPHONE_NA)
+//        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_NA,__IPHONE_NA)
         OBJC_ARC_UNAVAILABLE;
     OBJC_EXPORT id object_realloc(id anObject, size_t nBytes)    OBJC2_UNAVAILABLE;
     OBJC_EXPORT id object_reallocFromZone(id anObject, size_t nBytes, void *z) OBJC2_UNAVAILABLE;
 
-    #define OBSOLETE_OBJC_GETCLASSES 1
+#   define OBSOLETE_OBJC_GETCLASSES 1
+
     OBJC_EXPORT void *objc_getClasses(void)                      OBJC2_UNAVAILABLE;
     OBJC_EXPORT void objc_addClass(Class myClass)                OBJC2_UNAVAILABLE;
     OBJC_EXPORT void objc_setClassHandler(int (*)(const char *)) OBJC2_UNAVAILABLE;
     OBJC_EXPORT void objc_setMultithreaded (BOOL flag)           OBJC2_UNAVAILABLE;
 
     OBJC_EXPORT id class_createInstanceFromZone(Class, size_t idxIvars, void *z)  
-        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_NA,__IPHONE_NA)
+//        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5, __IPHONE_NA,__IPHONE_NA)
         OBJC_ARC_UNAVAILABLE;
 
     OBJC_EXPORT void class_addMethods(Class, struct objc_method_list *) OBJC2_UNAVAILABLE;
@@ -1738,14 +1739,17 @@
     OBJC_EXPORT unsigned method_getArgumentInfo(struct objc_method *m, int arg, const char **type, int *offset) OBJC2_UNAVAILABLE;
 
     OBJC_EXPORT Class objc_getOrigClass(const char *name)        OBJC2_UNAVAILABLE;
-    #define OBJC_NEXT_METHOD_LIST 1
+
+#   define OBJC_NEXT_METHOD_LIST 1
+
     OBJC_EXPORT struct objc_method_list *class_nextMethodList(Class, void **) OBJC2_UNAVAILABLE;
-    // usage for nextMethodList
+    // nextMethodList 的用法
     //
     // void *iterator = 0;
     // struct objc_method_list *mlist;
-    // while ( mlist = class_nextMethodList( cls, &iterator ) )
-    //    ;
+    // while ( mlist = class_nextMethodList( cls, &iterator ) ) {
+    //     ;
+    // }
      
     OBJC_EXPORT id (*_alloc)(Class, size_t)                      OBJC2_UNAVAILABLE;
     OBJC_EXPORT id (*_copy)(id, size_t)                          OBJC2_UNAVAILABLE;
