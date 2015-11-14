@@ -136,15 +136,15 @@
 
     /** 根据编译目标使用不同的关键词修饰使用该宏定义的函式声明，以帮助编译器生成导入或导出风格 **/
     #if !defined(OBJC_VISIBLE)
-    //#   if TARGET_OS_WIN32
+    #   if TARGET_OS_WIN32
     #       if defined(BUILDING_OBJC)
     #           define OBJC_VISIBLE __declspec(dllexport)
     #       else
     #           define OBJC_VISIBLE __declspec(dllimport)
     #       endif
-    //#   else
-    //#       define OBJC_VISIBLE  __attribute__((visibility("default")))
-    //#   endif
+    #   else
+    #       define OBJC_VISIBLE  __attribute__((visibility("default")))
+    #   endif
     #endif
 
     #if !defined(OBJC_EXPORT)

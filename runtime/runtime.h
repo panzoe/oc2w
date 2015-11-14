@@ -74,9 +74,9 @@
     #endif
 
     #ifdef __OBJC__
-    @class Protocol;
+        @class Protocol;
     #else
-    typedef struct objc_object Protocol;
+        typedef struct objc_object Protocol;
     #endif
 
     /// Defines a method
@@ -92,76 +92,75 @@
     } objc_property_attribute_t;
 
 
-    /* Functions */
+    /* 函式列表 */
 
-    /* Working with Instances */
+    /* 与操作实例相关的函式 */
 
     /** 
-     * Returns a copy of a given object.
+     * 返回指定对象的一个复本
      * 
-     * @param obj An Objective-C object.
-     * @param size The size of the object \e obj.
+     * @param obj Objective-C 对象
+     * @param size 对象 obj 的大小
      * 
-     * @return A copy of \e obj.
+     * @return obj 的复本
      */
     OBJC_EXPORT id object_copy(id obj, size_t size)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Frees the memory occupied by a given object.
+     * 释放给定对象占据的记性体
      * 
-     * @param obj An Objective-C object.
+     * @param obj Objective-C 对象
      * 
      * @return nil
      */
     OBJC_EXPORT id object_dispose(id obj)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Returns the class of an object.
+     * 获取某对象的类
      * 
-     * @param obj The object you want to inspect.
+     * @param obj 欲检查的对象
      * 
-     * @return The class object of which \e object is an instance, 
-     *  or \c Nil if \e object is \c nil.
+     * @return 返回该对象的类对象，若对象为 nil 则返回 Nil
      */
-    OBJC_EXPORT Class object_getClass(id obj) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+    OBJC_EXPORT Class object_getClass(id obj);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Sets the class of an object.
+     * 设定指定对象的属类
      * 
-     * @param obj The object to modify.
-     * @param cls A class object.
+     * @param obj 要修改的对象
+     * @param cls 类对象
      * 
-     * @return The previous value of \e object's class, or \c Nil if \e object is \c nil.
+     * @return 该对象修改前的类对象，若对象为 nil 则返回 Nil
      */
-    OBJC_EXPORT Class object_setClass(id obj, Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-
-
-    /** 
-     * Returns whether an object is a class object.
-     * 
-     * @param obj An Objective-C object.
-     * 
-     * @return true if the object is a class or metaclass, false otherwise.
-     */
-    OBJC_EXPORT BOOL object_isClass(id obj)
-        __OSX_AVAILABLE_STARTING(__MAC_10_10, __IPHONE_8_0);
+    OBJC_EXPORT Class object_setClass(id obj, Class cls);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
     /** 
-     * Returns the class name of a given object.
+     * 判断某对象是否是类对象
      * 
-     * @param obj An Objective-C object.
+     * @param obj Objective-C 对象
      * 
-     * @return The name of the class of which \e obj is an instance.
+     * @return 如果该对象是 “类” 或者 “元类” 则返回 true ，否则返回 false
      */
-    OBJC_EXPORT const char *object_getClassName(id obj)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+    OBJC_EXPORT BOOL object_isClass(id obj);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_10, __IPHONE_8_0);
+
+
+    /** 
+     * 获取对象的类名
+     * 
+     * @param obj Objective-C 对象
+     * 
+     * @return 实例对象的类名称
+     */
+    OBJC_EXPORT const char *object_getClassName(id obj);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns a pointer to any extra bytes allocated with an instance given object.
@@ -180,166 +179,149 @@
      * @note In a garbage-collected environment, the memory is scanned conservatively.
      */
     OBJC_EXPORT void *object_getIndexedIvars(id obj)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Reads the value of an instance variable in an object.
+     * 读取对象的实例变量值
      * 
-     * @param obj The object containing the instance variable whose value you want to read.
-     * @param ivar The Ivar describing the instance variable whose value you want to read.
+     * @param obj 包含该实例变量的对象
+     * @param ivar 实例变量描述符
      * 
-     * @return The value of the instance variable specified by \e ivar, or \c nil if \e object is \c nil.
+     * @return 目标实例变量值，若对象为 nil 则返回 nil
      * 
-     * @note \c object_getIvar is faster than \c object_getInstanceVariable if the Ivar
-     *  for the instance variable is already known.
+     * @note 在实例变量已知的情况下应使用 object_getIvar ，其处理速度要快于 object_getInstanceVariable
      */
-    OBJC_EXPORT id object_getIvar(id obj, Ivar ivar) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+    OBJC_EXPORT id object_getIvar(id obj, Ivar ivar);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Sets the value of an instance variable in an object.
+     * 设置对象的实例变量
      * 
-     * @param obj The object containing the instance variable whose value you want to set.
-     * @param ivar The Ivar describing the instance variable whose value you want to set.
-     * @param value The new value for the instance variable.
+     * @param obj 包含该实例变量的对象
+     * @param ivar 要设置的实例变量的描述符
+     * @param value 实例变量的新值
      * 
-     * @note \c object_setIvar is faster than \c object_setInstanceVariable if the Ivar
-     *  for the instance variable is already known.
+     * @note 在实例变量已知的情况下应使用 object_setIvar ，其处理速度要快于 object_setInstanceVariable     
      */
-    OBJC_EXPORT void object_setIvar(id obj, Ivar ivar, id value) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+    OBJC_EXPORT void object_setIvar(id obj, Ivar ivar, id value);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Changes the value of an instance variable of a class instance.
+     * 修改类实例的实例变量值
      * 
-     * @param obj A pointer to an instance of a class. Pass the object containing
-     *  the instance variable whose value you wish to modify.
-     * @param name A C string. Pass the name of the instance variable whose value you wish to modify.
-     * @param value The new value for the instance variable.
+     * @param obj 指向类实例的指针，该实例应包含你想要修改值的实例变量
+     * @param name 一个 C 语言风格的字元串，用于描述你想要修改的实例变量的名称
+     * @param value 该实例变量的新值
      * 
-     * @return A pointer to the \c Ivar data structure that defines the type and 
-     *  name of the instance variable specified by \e name.
+     * @return 一个指针 Ivar 数据结构的指针，该数据结构定义了 name 对应的实例变量的名称与类型
      */
     OBJC_EXPORT Ivar object_setInstanceVariable(id obj, const char *name, void *value)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Obtains the value of an instance variable of a class instance.
+     * 获取类实例的实例变量值
      * 
-     * @param obj A pointer to an instance of a class. Pass the object containing
-     *  the instance variable whose value you wish to obtain.
-     * @param name A C string. Pass the name of the instance variable whose value you wish to obtain.
-     * @param outValue On return, contains a pointer to the value of the instance variable.
+     * @param obj 指向类实例的指针，该实例应包含你想要获取值的实例变量
+     * @param name 一个 C 语言风格的字元串，用于描述你想要获取值的实例变量的名称
+     * @param outValue 函数返回时，用于存放一个指向实例变量值的指针
      * 
-     * @return A pointer to the \c Ivar data structure that defines the type and name of
-     *  the instance variable specified by \e name.
+     * @return 一个指针 Ivar 数据结构的指针，该数据结构定义了 name 对应的实例变量的名称与类型
      */
     OBJC_EXPORT Ivar object_getInstanceVariable(id obj, const char *name, void **outValue)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
 
-    /* Obtaining Class Definitions */
+    /* 与获取 “类定义” 相关的函式 */
 
     /** 
-     * Returns the class definition of a specified class.
+     * 获取指定名的类
      * 
-     * @param name The name of the class to look up.
+     * @param name 要查找的类的名称
      * 
-     * @return The Class object for the named class, or \c nil
-     *  if the class is not registered with the Objective-C runtime.
+     * @return 指名类的类对象，若该类并未注册于 Objective-C 运行时则返回 nil
      * 
-     * @note \c objc_getClass is different from \c objc_lookUpClass in that if the class
-     *  is not registered, \c objc_getClass calls the class handler callback and then checks
-     *  a second time to see whether the class is registered. \c objc_lookUpClass does 
-     *  not call the class handler callback.
+     * @note objc_getClass 与 objc_lookUpClass 的工作机制是不同的，当在 “类” 未注册的情况下，
+     *       objc_getClass 会请求 “类处理器回调”，然后二次检测类是否已注册，objc_lookUpClass 则不会这么做。
      * 
-     * @warning Earlier implementations of this function (prior to OS X v10.0)
-     *  terminate the program if the class does not exist.
+     * @warning 此函数的早期实现在类不存在时会终止整个应用程式
      */
-    OBJC_EXPORT Class objc_getClass(const char *name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+    OBJC_EXPORT Class objc_getClass(const char *name);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns the metaclass definition of a specified class.
+     * 获取指定类的 “元类”
      * 
-     * @param name The name of the class to look up.
+     * @param name 要查找 “元类” 的 “类” 的名称
      * 
-     * @return The \c Class object for the metaclass of the named class, or \c nil if the class
-     *  is not registered with the Objective-C runtime.
+     * @return 指名类的 “元类” 类对象，若该类未注册于当时 Objective-C 运行时，则返回 nil
      * 
-     * @note If the definition for the named class is not registered, this function calls the class handler
-     *  callback and then checks a second time to see if the class is registered. However, every class
-     *  definition must have a valid metaclass definition, and so the metaclass definition is always returned,
-     *  whether it’s valid or not.
+     * @note 如果该指名类定义并未注册，此函式会请求 “类处理器回调”，然后二次检测类是否已注册。
+     *       其实所有类肯定都拥有一个有效的元类，总是函式会返回一个元类而无论其是否有效。
      */
-    OBJC_EXPORT Class objc_getMetaClass(const char *name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+    OBJC_EXPORT Class objc_getMetaClass(const char *name);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns the class definition of a specified class.
+     * 获取指定名的类
      * 
-     * @param name The name of the class to look up.
+     * @param name 要查找的类的名称
      * 
-     * @return The Class object for the named class, or \c nil if the class
-     *  is not registered with the Objective-C runtime.
+     * @return 指名类的类对象，若该类并未注册于 Objective-C 运行时则返回 nil
      * 
-     * @note \c objc_getClass is different from this function in that if the class is not
-     *  registered, \c objc_getClass calls the class handler callback and then checks a second
-     *  time to see whether the class is registered. This function does not call the class handler callback.
+     * @note objc_getClass 与 objc_lookUpClass 的工作机制是不同的，当在 “类” 未注册的情况下，
+     *       objc_getClass 会请求 “类处理器回调”，然后二次检测类是否已注册，本函式则不会这么做。
      */
-    OBJC_EXPORT Class objc_lookUpClass(const char *name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+    OBJC_EXPORT Class objc_lookUpClass(const char *name);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns the class definition of a specified class.
+     * 获取指名类的类定义
      * 
-     * @param name The name of the class to look up.
+     * @param name 要查找的类的名称
      * 
-     * @return The Class object for the named class.
+     * @return 指名类的类对象
      * 
-     * @note This function is the same as \c objc_getClass, but kills the process if the class is not found.
+     * @note 此函式与 objc_getClass 功能相同，不同之处在于当类不存在时将会 “杀死” 进程
      * @note This function is used by ZeroLink, where failing to find a class would be a compile-time link error without ZeroLink.
      */
-    OBJC_EXPORT Class objc_getRequiredClass(const char *name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+    OBJC_EXPORT Class objc_getRequiredClass(const char *name);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Obtains the list of registered class definitions.
+     * 获取已注册的 “类定义” 列表
      * 
-     * @param buffer An array of \c Class values. On output, each \c Class value points to
-     *  one class definition, up to either \e bufferCount or the total number of registered classes,
-     *  whichever is less. You can pass \c NULL to obtain the total number of registered class
-     *  definitions without actually retrieving any class definitions.
-     * @param bufferCount An integer value. Pass the number of pointers for which you have allocated space
-     *  in \e buffer. On return, this function fills in only this number of elements. If this number is less
-     *  than the number of registered classes, this function returns an arbitrary subset of the registered classes.
+     * @param buffer 一个 “类” 阵列。函式返回时阵列中每个成员都指向一个 “类定义”，
+     *        阵列成员数量以 bufferCount 与 已注册 “类” 总数两者中较少者为准，
+     *        如果只想单纯查询已注册 “类” 总数，传递 NULL 作为参数即可，函式将不会返回实际的 “类定义”
+     * @param bufferCount 整数值。用于指示函式变量 buffer 指向的记性体内容可存放的指针数量
+     *        函式返回时，只会向阵列中装入这么多数量的元素，如果该数值小于 “已注册类” 总数，
+     *        那些函式返回的则会是 “已注册类” 的任意子集
      * 
-     * @return An integer value indicating the total number of registered classes.
+     * @return 一个用于指示 “已注册类” 总数的整型值
      * 
-     * @note The Objective-C runtime library automatically registers all the classes defined in your source code.
-     *  You can create class definitions at runtime and register them with the \c objc_addClass function.
+     * @note Objective-C 运行时库会自行注册你源码中定义的所有 “类”，
+     *       通过 objc_addClass 函式可以在运行时态创建出 “类定义” 并注册之
      * 
-     * @warning You cannot assume that class objects you get from this function are classes that inherit from \c NSObject,
-     *  so you cannot safely call any methods on such classes without detecting that the method is implemented first.
+     * @warning 需注册的是，不可假设从此函式获取到的 “类对象” 都继承自 NSObject，
+     *          所以在检测待调用方法已被实现前，任何方法调用都可能是不安全的
      */
-    OBJC_EXPORT int objc_getClassList(Class *buffer, int bufferCount)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+    OBJC_EXPORT int objc_getClassList(Class *buffer, int bufferCount);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Creates and returns a list of pointers to all registered class definitions.
+     * 创建并返回一个指向所有 “已注册类” 的 “类定义” 列表的指针
      * 
-     * @param outCount An integer pointer used to store the number of classes returned by
-     *  this function in the list. It can be \c nil.
+     * @param outCount 一个用于存放此函式返回的指针列表长度的整形指针，不可为 nil
      * 
-     * @return A nil terminated array of classes. It must be freed with \c free().
+     * @return 一个由 nil 结尾的类阵列。必须使用 c 标准库函式 free() 进行释放
      * 
      * @see objc_getClassList
      */
-    OBJC_EXPORT Class *objc_copyClassList(unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_3_1);
+    OBJC_EXPORT Class *objc_copyClassList(unsigned int *outCount);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_3_1);
 
 
     /* Working with Classes */
@@ -352,7 +334,7 @@
      * @return The name of the class, or the empty string if \e cls is \c Nil.
      */
     OBJC_EXPORT const char *class_getName(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a Boolean value that indicates whether a class object is a metaclass.
@@ -363,7 +345,7 @@
      *  \c NO if \e cls is \c Nil.
      */
     OBJC_EXPORT BOOL class_isMetaClass(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the superclass of a class.
@@ -376,7 +358,7 @@
      * @note You should usually use \c NSObject's \c superclass method instead of this function.
      */
     OBJC_EXPORT Class class_getSuperclass(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Sets the superclass of a given class.
@@ -389,7 +371,7 @@
      * @warning You should not use this function.
      */
     OBJC_EXPORT Class class_setSuperclass(Class cls, Class newSuper) 
-         __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_5,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
+//         __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_5,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
 
     /** 
      * Returns the version number of a class definition.
@@ -402,7 +384,7 @@
      * @see class_setVersion
      */
     OBJC_EXPORT int class_getVersion(Class cls)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Sets the version number of a class definition.
@@ -419,7 +401,7 @@
      *  version number using the \c setVersion: class method, which is implemented using the \c class_setVersion function.
      */
     OBJC_EXPORT void class_setVersion(Class cls, int version)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns the size of instances of a class.
@@ -429,7 +411,7 @@
      * @return The size in bytes of instances of the class \e cls, or \c 0 if \e cls is \c Nil.
      */
     OBJC_EXPORT size_t class_getInstanceSize(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the \c Ivar for a specified instance variable of a given class.
@@ -441,7 +423,7 @@
      *  the instance variable specified by \e name.
      */
     OBJC_EXPORT Ivar class_getInstanceVariable(Class cls, const char *name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns the Ivar for a specified class variable of a given class.
@@ -452,7 +434,7 @@
      * @return A pointer to an \c Ivar data structure containing information about the class variable specified by \e name.
      */
     OBJC_EXPORT Ivar class_getClassVariable(Class cls, const char *name) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Describes the instance variables declared by a class.
@@ -468,7 +450,7 @@
      *  If the class declares no instance variables, or cls is Nil, NULL is returned and *outCount is 0.
      */
     OBJC_EXPORT Ivar *class_copyIvarList(Class cls, unsigned int *outCount) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a specified instance method for a given class.
@@ -483,7 +465,7 @@
      * @note This function searches superclasses for implementations, whereas \c class_copyMethodList does not.
      */
     OBJC_EXPORT Method class_getInstanceMethod(Class cls, SEL name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns a pointer to the data structure describing a given class method for a given class.
@@ -499,7 +481,7 @@
      *  whereas \c class_copyMethodList does not.
      */
     OBJC_EXPORT Method class_getClassMethod(Class cls, SEL name)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns the function pointer that would be called if a 
@@ -517,7 +499,7 @@
      *  the selector, the function pointer returned will be part of the runtime's message forwarding machinery.
      */
     OBJC_EXPORT IMP class_getMethodImplementation(Class cls, SEL name) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the function pointer that would be called if a particular 
@@ -530,7 +512,7 @@
      *  with an instance of the class, or \c NULL if \e cls is \c Nil.
      */
     OBJC_EXPORT IMP class_getMethodImplementation_stret(Class cls, SEL name) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
          OBJC_ARM64_UNAVAILABLE;
 
     /** 
@@ -545,7 +527,7 @@
      *  methods instead of this function.
      */
     OBJC_EXPORT BOOL class_respondsToSelector(Class cls, SEL sel) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Describes the instance methods implemented by a class.
@@ -565,7 +547,7 @@
      *  use \c class_getInstanceMethod or \c class_getClassMethod.
      */
     OBJC_EXPORT Method *class_copyMethodList(Class cls, unsigned int *outCount) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a Boolean value that indicates whether a class conforms to a given protocol.
@@ -578,7 +560,7 @@
      * @note You should usually use NSObject's conformsToProtocol: method instead of this function.
      */
     OBJC_EXPORT BOOL class_conformsToProtocol(Class cls, Protocol *protocol) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Describes the protocols adopted by a class.
@@ -594,7 +576,7 @@
      *  If cls adopts no protocols, or cls is Nil, returns NULL and *outCount is 0.
      */
     OBJC_EXPORT Protocol * __unsafe_unretained *class_copyProtocolList(Class cls, unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a property with a given name of a given class.
@@ -607,7 +589,7 @@
      *  or \c NULL if \e cls is \c Nil.
      */
     OBJC_EXPORT objc_property_t class_getProperty(Class cls, const char *name)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Describes the properties declared by a class.
@@ -623,7 +605,7 @@
      *  If \e cls declares no properties, or \e cls is \c Nil, returns \c NULL and \c *outCount is \c 0.
      */
     OBJC_EXPORT objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a description of the \c Ivar layout for a given class.
@@ -633,7 +615,7 @@
      * @return A description of the \c Ivar layout for \e cls.
      */
     OBJC_EXPORT const uint8_t *class_getIvarLayout(Class cls)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a description of the layout of weak Ivars for a given class.
@@ -643,7 +625,7 @@
      * @return A description of the layout of the weak \c Ivars for \e cls.
      */
     OBJC_EXPORT const uint8_t *class_getWeakIvarLayout(Class cls)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Adds a new method to a class with a given name and implementation.
@@ -662,7 +644,7 @@
      */
     OBJC_EXPORT BOOL class_addMethod(Class cls, SEL name, IMP imp, 
                                      const char *types) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Replaces the implementation of a method for a given class.
@@ -684,7 +666,7 @@
      */
     OBJC_EXPORT IMP class_replaceMethod(Class cls, SEL name, IMP imp, 
                                         const char *types) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Adds a new instance variable to a class.
@@ -701,7 +683,7 @@
      */
     OBJC_EXPORT BOOL class_addIvar(Class cls, const char *name, size_t size, 
                                    uint8_t alignment, const char *types) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Adds a protocol to a class.
@@ -713,7 +695,7 @@
      *  (for example, the class already conforms to that protocol).
      */
     OBJC_EXPORT BOOL class_addProtocol(Class cls, Protocol *protocol) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Adds a property to a class.
@@ -727,7 +709,7 @@
      *  (for example, the class already has that property).
      */
     OBJC_EXPORT BOOL class_addProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Replace a property of a class. 
@@ -738,7 +720,7 @@
      * @param attributeCount The number of attributes in \e attributes. 
      */
     OBJC_EXPORT void class_replaceProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Sets the Ivar layout for a given class.
@@ -747,7 +729,7 @@
      * @param layout The layout of the \c Ivars for \e cls.
      */
     OBJC_EXPORT void class_setIvarLayout(Class cls, const uint8_t *layout)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Sets the layout for weak Ivars for a given class.
@@ -756,7 +738,7 @@
      * @param layout The layout of the weak Ivars for \e cls.
      */
     OBJC_EXPORT void class_setWeakIvarLayout(Class cls, const uint8_t *layout)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Used by CoreFoundation's toll-free bridging.
@@ -769,7 +751,7 @@
      * @warning Do not call this function yourself.
      */
     OBJC_EXPORT Class objc_getFutureClass(const char *name) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
          OBJC_ARC_UNAVAILABLE;
 
     /** 
@@ -778,7 +760,7 @@
      * @warning Do not call this function yourself.
      */
     OBJC_EXPORT void objc_setFutureClass(Class cls, const char *name) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
          OBJC_ARC_UNAVAILABLE;
 
 
@@ -796,7 +778,7 @@
      * @return An instance of the class \e cls.
      */
     OBJC_EXPORT id class_createInstance(Class cls, size_t extraBytes)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
@@ -813,7 +795,7 @@
      * @see class_createInstance
      */
     OBJC_EXPORT id objc_constructInstance(Class cls, void *bytes) 
-        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
@@ -829,7 +811,7 @@
      * @note CF and other clients do call this under GC.
      */
     OBJC_EXPORT void *objc_destructInstance(id obj) 
-        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_0)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_0)
         OBJC_ARC_UNAVAILABLE;
 
 
@@ -854,7 +836,7 @@
      */
     OBJC_EXPORT Class objc_allocateClassPair(Class superclass, const char *name, 
                                              size_t extraBytes) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Registers a class that was allocated using \c objc_allocateClassPair.
@@ -862,7 +844,7 @@
      * @param cls The class you want to register.
      */
     OBJC_EXPORT void objc_registerClassPair(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Used by Foundation's Key-Value Observing.
@@ -870,7 +852,7 @@
      * @warning Do not call this function yourself.
      */
     OBJC_EXPORT Class objc_duplicateClass(Class original, const char *name, size_t extraBytes)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Destroy a class and its associated metaclass. 
@@ -881,7 +863,7 @@
      * @warning Do not call if instances of this class or a subclass exist.
      */
     OBJC_EXPORT void objc_disposeClassPair(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
     /* Working with Methods */
@@ -896,7 +878,7 @@
      * @note To get the method name as a C string, call \c sel_getName(method_getName(method)).
      */
     OBJC_EXPORT SEL method_getName(Method m) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the implementation of a method.
@@ -906,7 +888,7 @@
      * @return A function pointer of type IMP.
      */
     OBJC_EXPORT IMP method_getImplementation(Method m) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a string describing a method's parameter and return types.
@@ -916,7 +898,7 @@
      * @return A C string. The string may be \c NULL.
      */
     OBJC_EXPORT const char *method_getTypeEncoding(Method m) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the number of arguments accepted by a method.
@@ -926,7 +908,7 @@
      * @return An integer containing the number of arguments accepted by the given method.
      */
     OBJC_EXPORT unsigned int method_getNumberOfArguments(Method m)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns a string describing a method's return type.
@@ -936,7 +918,7 @@
      * @return A C string describing the return type. You must free the string with \c free().
      */
     OBJC_EXPORT char *method_copyReturnType(Method m) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a string describing a single parameter type of a method.
@@ -948,7 +930,7 @@
      *  if method has no parameter index \e index. You must free the string with \c free().
      */
     OBJC_EXPORT char *method_copyArgumentType(Method m, unsigned int index) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns by reference a string describing a method's return type.
@@ -961,7 +943,7 @@
      *  \e dst is filled as if \c strncpy(dst, parameter_type, dst_len) were called.
      */
     OBJC_EXPORT void method_getReturnType(Method m, char *dst, size_t dst_len) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns by reference a string describing a single parameter type of a method.
@@ -977,9 +959,9 @@
      */
     OBJC_EXPORT void method_getArgumentType(Method m, unsigned int index, 
                                             char *dst, size_t dst_len) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
     OBJC_EXPORT struct objc_method_description *method_getDescription(Method m) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Sets the implementation of a method.
@@ -990,7 +972,7 @@
      * @return The previous implementation of the method.
      */
     OBJC_EXPORT IMP method_setImplementation(Method m, IMP imp) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Exchanges the implementations of two methods.
@@ -1007,7 +989,7 @@
      *  \endcode
      */
     OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
     /* Working with Instance Variables */
@@ -1020,7 +1002,7 @@
      * @return A C string containing the instance variable's name.
      */
     OBJC_EXPORT const char *ivar_getName(Ivar v) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the type string of an instance variable.
@@ -1032,7 +1014,7 @@
      * @note For possible values, see Objective-C Runtime Programming Guide > Type Encodings.
      */
     OBJC_EXPORT const char *ivar_getTypeEncoding(Ivar v) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the offset of an instance variable.
@@ -1045,7 +1027,7 @@
      *  and \c object_setIvar instead of using this offset to access the instance variable data directly.
      */
     OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
     /* Working with Properties */
@@ -1058,7 +1040,7 @@
      * @return A C string containing the property's name.
      */
     OBJC_EXPORT const char *property_getName(objc_property_t property) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the attribute string of a property.
@@ -1070,7 +1052,7 @@
      * @note The format of the attribute string is described in Declared Properties in Objective-C Runtime Programming Guide.
      */
     OBJC_EXPORT const char *property_getAttributes(objc_property_t property) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns an array of property attributes for a property. 
@@ -1081,7 +1063,7 @@
      * @return An array of property attributes; must be free'd() by the caller. 
      */
     OBJC_EXPORT objc_property_attribute_t *property_copyAttributeList(objc_property_t property, unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Returns the value of a property attribute given the attribute name.
@@ -1093,7 +1075,7 @@
      *  \e property, \c nil otherwise. 
      */
     OBJC_EXPORT char *property_copyAttributeValue(objc_property_t property, const char *attributeName)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
     /* Working with Protocols */
@@ -1108,7 +1090,7 @@
      * @note This function acquires the runtime lock.
      */
     OBJC_EXPORT Protocol *objc_getProtocol(const char *name)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns an array of all the protocols known to the runtime.
@@ -1121,7 +1103,7 @@
      * @note This function acquires the runtime lock.
      */
     OBJC_EXPORT Protocol * __unsafe_unretained *objc_copyProtocolList(unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a Boolean value that indicates whether one protocol conforms to another protocol.
@@ -1139,7 +1121,7 @@
      *  All the protocols listed between angle brackets are considered part of the ProtocolName protocol.
      */
     OBJC_EXPORT BOOL protocol_conformsToProtocol(Protocol *proto, Protocol *other)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a Boolean value that indicates whether two protocols are equal.
@@ -1150,7 +1132,7 @@
      * @return \c YES if \e proto is the same as \e other, otherwise \c NO.
      */
     OBJC_EXPORT BOOL protocol_isEqual(Protocol *proto, Protocol *other)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the name of a protocol.
@@ -1160,7 +1142,7 @@
      * @return The name of the protocol \e p as a C string.
      */
     OBJC_EXPORT const char *protocol_getName(Protocol *p)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns a method description structure for a specified method of a given protocol.
@@ -1178,7 +1160,7 @@
      * @note This function recursively searches any protocols that this protocol conforms to.
      */
     OBJC_EXPORT struct objc_method_description protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns an array of method descriptions of methods meeting a given specification for a given protocol.
@@ -1198,7 +1180,7 @@
      * @note Methods in other protocols adopted by this protocol are not included.
      */
     OBJC_EXPORT struct objc_method_description *protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BOOL isInstanceMethod, unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the specified property of a given protocol.
@@ -1212,7 +1194,7 @@
      *  or \c NULL if none of \e proto's properties meets the specification.
      */
     OBJC_EXPORT objc_property_t protocol_getProperty(Protocol *proto, const char *name, BOOL isRequiredProperty, BOOL isInstanceProperty)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns an array of the properties declared by a protocol.
@@ -1226,7 +1208,7 @@
      *  If the protocol declares no properties, \c NULL is returned and \c *outCount is \c 0.
      */
     OBJC_EXPORT objc_property_t *protocol_copyPropertyList(Protocol *proto, unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns an array of the protocols adopted by a protocol.
@@ -1239,7 +1221,7 @@
      *  If the protocol declares no properties, \c NULL is returned and \c *outCount is \c 0.
      */
     OBJC_EXPORT Protocol * __unsafe_unretained *protocol_copyProtocolList(Protocol *proto, unsigned int *outCount)
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Creates a new protocol instance that cannot be used until registered with
@@ -1252,7 +1234,7 @@
      * @note There is no dispose method for this. 
      */
     OBJC_EXPORT Protocol *objc_allocateProtocol(const char *name) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Registers a newly constructed protocol with the runtime. The protocol
@@ -1261,7 +1243,7 @@
      * @param proto The protocol you want to register.
      */
     OBJC_EXPORT void objc_registerProtocol(Protocol *proto) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Adds a method to a protocol. The protocol must be under construction.
@@ -1273,7 +1255,7 @@
      * @param isInstanceMethod YES if the method is an instance method. 
      */
     OBJC_EXPORT void protocol_addMethodDescription(Protocol *proto, SEL name, const char *types, BOOL isRequiredMethod, BOOL isInstanceMethod) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Adds an incorporated protocol to another protocol. The protocol being
@@ -1284,7 +1266,7 @@
      * @param addition The protocol you want to incorporate into \e proto, it must be registered.
      */
     OBJC_EXPORT void protocol_addProtocol(Protocol *proto, Protocol *addition) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Adds a property to a protocol. The protocol must be under construction. 
@@ -1299,7 +1281,7 @@
      *  not add the property to the protocol at all. 
      */
     OBJC_EXPORT void protocol_addProperty(Protocol *proto, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount, BOOL isRequiredProperty, BOOL isInstanceProperty)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
     /* Working with Libraries */
@@ -1313,7 +1295,7 @@
      * @return An array of C strings of names. Must be free()'d by caller.
      */
     OBJC_EXPORT const char **objc_copyImageNames(unsigned int *outCount) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the dynamic library name a class originated from.
@@ -1323,7 +1305,7 @@
      * @return The name of the library containing this class.
      */
     OBJC_EXPORT const char *class_getImageName(Class cls) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Returns the names of all the classes within a library.
@@ -1335,7 +1317,7 @@
      */
     OBJC_EXPORT const char **objc_copyClassNamesForImage(const char *image, 
                                                          unsigned int *outCount) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
     /* Working with Selectors */
@@ -1348,7 +1330,7 @@
      * @return A C string indicating the name of the selector.
      */
     OBJC_EXPORT const char *sel_getName(SEL sel)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Registers a method name with the Objective-C runtime system.
@@ -1363,7 +1345,7 @@
      *  observed that many of the callers of this function did not check the return value for \c NULL.
      */
     OBJC_EXPORT SEL sel_getUid(const char *str)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Registers a method with the Objective-C runtime system, maps the method 
@@ -1378,7 +1360,7 @@
      *  has already been registered, this function simply returns the selector.
      */
     OBJC_EXPORT SEL sel_registerName(const char *str)
-        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
      * Returns a Boolean value that indicates whether two selectors are equal.
@@ -1391,7 +1373,7 @@
      * @note sel_isEqual is equivalent to ==.
      */
     OBJC_EXPORT BOOL sel_isEqual(SEL lhs, SEL rhs) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
     /* Objective-C Language Features */
@@ -1406,7 +1388,7 @@
      * 
      */
     OBJC_EXPORT void objc_enumerationMutation(id obj) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Sets the current mutation handler. 
@@ -1414,7 +1396,7 @@
      * @param handler Function pointer to the new mutation handler.
      */
     OBJC_EXPORT void objc_setEnumerationMutationHandler(void (*handler)(id)) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Set the function to be called by objc_msgForward.
@@ -1425,7 +1407,7 @@
      * @see message.h::_objc_msgForward
      */
     OBJC_EXPORT void objc_setForwardHandler(void *fwd, void *fwd_stret) 
-         __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
      * Creates a pointer to a function that will call the block
@@ -1440,7 +1422,7 @@
      *  \c imp_removeBlock.
      */
     OBJC_EXPORT IMP imp_implementationWithBlock(id block)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Return the block associated with an IMP that was created using
@@ -1451,7 +1433,7 @@
      * @return The block called by \e anImp.
      */
     OBJC_EXPORT id imp_getBlock(IMP anImp)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * Disassociates a block from an IMP that was created using
@@ -1464,7 +1446,7 @@
      *  (For example, the block might not have been used to create an IMP previously).
      */
     OBJC_EXPORT BOOL imp_removeBlock(IMP anImp)
-         __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
      * This loads the object referenced by a weak pointer and returns it, after
@@ -1477,7 +1459,7 @@
      * @return The object pointed to by \e location, or \c nil if \e location is \c nil.
      */
     OBJC_EXPORT id objc_loadWeak(id *location)
-        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_5_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_5_0);
 
     /** 
      * This function stores a new value into a __weak variable. It would
@@ -1489,7 +1471,7 @@
      * @return The value stored into \e location, i.e. \e obj
      */
     OBJC_EXPORT id objc_storeWeak(id *location, id obj) 
-        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_5_0);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_5_0);
 
 
     /* Associative References */
@@ -1525,7 +1507,7 @@
      * @see objc_removeAssociatedObjects
      */
     OBJC_EXPORT void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)
-        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
     /** 
      * Returns the value associated with a given object for a given key.
@@ -1538,7 +1520,7 @@
      * @see objc_setAssociatedObject
      */
     OBJC_EXPORT id objc_getAssociatedObject(id object, const void *key)
-        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
     /** 
      * Removes all associations for a given object.
@@ -1555,7 +1537,7 @@
      * @see objc_getAssociatedObject
      */
     OBJC_EXPORT void objc_removeAssociatedObjects(id object)
-        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
 
     #define _C_ID       '@'

@@ -76,29 +76,29 @@
          * 
          * @param exception The exception to be thrown.
          */
-        OBJC_EXPORT void objc_exception_throw(id exception)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-        OBJC_EXPORT void objc_exception_rethrow(void)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-        OBJC_EXPORT id objc_begin_catch(void *exc_buf)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-        OBJC_EXPORT void objc_end_catch(void)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-        OBJC_EXPORT void objc_terminate(void)
-            __OSX_AVAILABLE_STARTING(__MAC_10_8, __IPHONE_6_0);
+        OBJC_EXPORT void objc_exception_throw(id exception);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT void objc_exception_rethrow(void);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT id objc_begin_catch(void *exc_buf);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT void objc_end_catch(void);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT void objc_terminate(void);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_8, __IPHONE_6_0);
 
-        OBJC_EXPORT objc_exception_preprocessor objc_setExceptionPreprocessor(objc_exception_preprocessor fn)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-        OBJC_EXPORT objc_exception_matcher objc_setExceptionMatcher(objc_exception_matcher fn)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-        OBJC_EXPORT objc_uncaught_exception_handler objc_setUncaughtExceptionHandler(objc_uncaught_exception_handler fn)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT objc_exception_preprocessor objc_setExceptionPreprocessor(objc_exception_preprocessor fn);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT objc_exception_matcher objc_setExceptionMatcher(objc_exception_matcher fn);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+        OBJC_EXPORT objc_uncaught_exception_handler objc_setUncaughtExceptionHandler(objc_uncaught_exception_handler fn);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
         // Not for iOS.
-        OBJC_EXPORT uintptr_t objc_addExceptionHandler(objc_exception_handler fn, void *context)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_NA);
-        OBJC_EXPORT void objc_removeExceptionHandler(uintptr_t token)
-            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_NA);
+        OBJC_EXPORT uintptr_t objc_addExceptionHandler(objc_exception_handler fn, void *context);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_NA);
+        OBJC_EXPORT void objc_removeExceptionHandler(uintptr_t token);
+//            __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_NA);
 
         // __OBJC2__
 //    #endif
