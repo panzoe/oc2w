@@ -741,30 +741,27 @@
     /* 实例化 ”类“ 相关的函式 */
 
     /** 
-     * Creates an instance of a class, allocating memory for the class in the 
-     * default malloc memory zone.
+     * 在默认的 malloc 区域为类分配记忆体并创建 ”类“ 的实例
      * 
-     * @param cls The class that you wish to allocate an instance of.
-     * @param extraBytes An integer indicating the number of extra bytes to allocate. 
-     *  The additional bytes can be used to store additional instance variables beyond 
-     *  those defined in the class definition.
+     * @param cls 想要实例化的 ”类“
+     * @param extraBytes 指示需申请的扩充字节数
+     *        这些扩充的忘记体空间可以 ”类定义“ 声明的空间之外，额外存储一些附加的实例变量
      * 
-     * @return An instance of the class \e cls.
+     * @return ”类“ 的一个实例
      */
     OBJC_EXPORT id class_createInstance(Class cls, size_t extraBytes)
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
         OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Creates an instance of a class at the specific location provided.
+     * 在提供的指定地址上创建 ”类“ 的实例
      * 
-     * @param cls The class that you wish to allocate an instance of.
-     * @param bytes The location at which to allocate an instance of \e cls.
-     *  Must point to at least \c class_getInstanceSize(cls) bytes of well-aligned,
-     *  zero-filled memory.
+     * @param cls 想要实例化的 ”类“
+     * @param bytes 想要创建 ”类“ 实例的记忆体区域首地址
+     *        该记忆体至少要拥有 class_getInstanceSize(cls) 个字节，
+     *        且保证 ”良对齐”(well-aligned)，“全0填充”(zero-filled)
      *
-     * @return \e bytes on success, \c nil otherwise. (For example, \e cls or \e bytes
-     *  might be \c nil)
+     * @return 创建成功返回实例对象，否则返回 nil（例如，cls 或 bytes 传参为 nil）
      *
      * @see class_createInstance
      */
@@ -773,188 +770,181 @@
         OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Destroys an instance of a class without freeing memory and removes any
-     * associated references this instance might have had.
+     * 销毁 “类” 实例，但不释放占有的记忆体，也不会该实例可能已拥有的任何关联引用
      * 
-     * @param obj The class instance to destroy.
+     * @param obj 要销毁的 “类” 实例
      * 
-     * @return \e obj. Does nothing if \e obj is nil.
+     * @return obj 若 obj 为 nil，则什么也不做
      * 
-     * @warning GC does not call this. If you edit this, also edit finalize.
+     * @warning “垃圾回收器” 本身不会调用此函式，如果你修改了这里，也需要同时修改 finalize
      *
-     * @note CF and other clients do call this under GC.
+     * @note 在 “垃圾回收” 模式下 CF 和其他应用框架会调用此函式
      */
     OBJC_EXPORT void *objc_destructInstance(id obj) 
 //        __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_0)
         OBJC_ARC_UNAVAILABLE;
 
 
-    /* Adding Classes */
+    /* 添加 “类” 相关的函式 */
 
     /** 
-     * Creates a new class and metaclass.
+     * 创建一个新的 “类” 及 “元类”
      * 
-     * @param superclass The class to use as the new class's superclass, or \c Nil to create a new root class.
-     * @param name The string to use as the new class's name. The string will be copied.
-     * @param extraBytes The number of bytes to allocate for indexed ivars at the end of 
-     *  the class and metaclass objects. This should usually be \c 0.
+     * @param superclass 作为新 “类” 的 “超类” 的 类，传递 Nil 则会创建一个新的 “根类”
+     * @param name 新 “类” 的名称，函式会以复制的方式读取
+     * @param extraBytes 为 “已索引实例变量”(indexed ivars) 额外申请的记忆体字节数，
+     *        该字节空间会位于 “类” 与 “元类” 的尾部，该参数通常应该保持为 0
      * 
-     * @return The new class, or Nil if the class could not be created (for example, the desired name is already in use).
+     * @return 创建的新 “类”，如创建失败则返回 Nil （例如，要使用的 “类” 名称已被利用）
      * 
-     * @note You can get a pointer to the new metaclass by calling \c object_getClass(newClass).
-     * @note To create a new class, start by calling \c objc_allocateClassPair. 
-     *  Then set the class's attributes with functions like \c class_addMethod and \c class_addIvar.
-     *  When you are done building the class, call \c objc_registerClassPair. The new class is now ready for use.
-     * @note Instance methods and instance variables should be added to the class itself. 
-     *  Class methods should be added to the metaclass.
+     * @note 可以通过 object_getClass(newClass) 函式调用获取指向 “元类” 的指针
+     * @note 创建一个新 “类” ，应该先调用 objc_allocateClassPair，
+     *       然后使用 class_addMethod 和 class_addIvar 设置类级方法与变量
+     *       当新 “类” 的构建工作完成后，调用 objc_registerClassPair 进行注册，新 “类” 就可以正常使用了
+     * @note 实例方法与变量应该到 “类” 本身，类级方法则应添加到 “元类” 上
      */
-    OBJC_EXPORT Class objc_allocateClassPair(Class superclass, const char *name, 
-                                             size_t extraBytes) 
+    OBJC_EXPORT Class objc_allocateClassPair(Class superclass, const char *name, size_t extraBytes);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Registers a class that was allocated using \c objc_allocateClassPair.
+     * 注册一个已利用 objc_allocateClassPair 创建好的 “类”
      * 
-     * @param cls The class you want to register.
+     * @param cls 要注册的 “类”
      */
-    OBJC_EXPORT void objc_registerClassPair(Class cls) 
+    OBJC_EXPORT void objc_registerClassPair(Class cls);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Used by Foundation's Key-Value Observing.
+     * 提供给 Foundation 的 键值观察机制(KVO:Key-Value Observing)
      * 
-     * @warning Do not call this function yourself.
+     * @warning 请勿自行调用此函式
      */
-    OBJC_EXPORT Class objc_duplicateClass(Class original, const char *name, size_t extraBytes)
+    OBJC_EXPORT Class objc_duplicateClass(Class original, const char *name, size_t extraBytes);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Destroy a class and its associated metaclass. 
+     * 销毁一个 “类” 及其关联的 “元类”
      * 
-     * @param cls The class to be destroyed. It must have been allocated with 
-     *  \c objc_allocateClassPair
+     * @param cls 要销毁的 “类”，必须是由 objc_allocateClassPair 函式创建的。
      * 
-     * @warning Do not call if instances of this class or a subclass exist.
+     * @warning 请勿在其 “子类” 或 实例已存在的情况下调用此函式
      */
-    OBJC_EXPORT void objc_disposeClassPair(Class cls) 
+    OBJC_EXPORT void objc_disposeClassPair(Class cls);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
-    /* Working with Methods */
+    /* 操作 方法 相关的函式 */
 
     /** 
-     * Returns the name of a method.
+     * 从一个 “方法” 中返回 “方法选择器”
      * 
-     * @param m The method to inspect.
+     * @param m 要检视的 “方法”
      * 
-     * @return A pointer of type SEL.
+     * @return “方法选择器”
      * 
-     * @note To get the method name as a C string, call \c sel_getName(method_getName(method)).
+     * @note 可以通过调用 sel_getName(method_getName(method)) 得到名称的 C 语言风格字元串版本
      */
-    OBJC_EXPORT SEL method_getName(Method m) 
+    OBJC_EXPORT SEL method_getName(Method m);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the implementation of a method.
+     * 从一个 “方法” 中返回其 “方法实现”
      * 
-     * @param m The method to inspect.
+     * @param m 要检视的 “方法”
      * 
-     * @return A function pointer of type IMP.
+     * @return “方法实现” 的函式指针
      */
-    OBJC_EXPORT IMP method_getImplementation(Method m) 
+    OBJC_EXPORT IMP method_getImplementation(Method m);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a string describing a method's parameter and return types.
+     * 获取一个用于描述方法 参数及返回值 类型的字元串
      * 
-     * @param m The method to inspect.
+     * @param m 要检视的 “方法”
      * 
-     * @return A C string. The string may be \c NULL.
+     * @return 一个 C 语言风格的字元串，该字元串有可能会是 NULL
      */
-    OBJC_EXPORT const char *method_getTypeEncoding(Method m) 
+    OBJC_EXPORT const char *method_getTypeEncoding(Method m);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the number of arguments accepted by a method.
+     * 获取一个方法接受的参数数量
      * 
-     * @param m A pointer to a \c Method data structure. Pass the method in question.
+     * @param m 一个指向 Method 数据结构的指针，传递要检视的 “方法描述符”
      * 
-     * @return An integer containing the number of arguments accepted by the given method.
+     * @return 指定函式接受的参数总数
      */
-    OBJC_EXPORT unsigned int method_getNumberOfArguments(Method m)
+    OBJC_EXPORT unsigned int method_getNumberOfArguments(Method m);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns a string describing a method's return type.
+     * 返回一个用于描述方法返回值类型的字元串
      * 
-     * @param m The method to inspect.
+     * @param m 要检视的 “方法”
      * 
-     * @return A C string describing the return type. You must free the string with \c free().
+     * @return 一个用于描述方法返回值类型的 C 语言风格字元串，须自行使用 free() 释放记忆体
      */
-    OBJC_EXPORT char *method_copyReturnType(Method m) 
+    OBJC_EXPORT char *method_copyReturnType(Method m);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a string describing a single parameter type of a method.
+     * 返回一个用于描述方法单个指定序号参数类型的字元串
      * 
-     * @param m The method to inspect.
-     * @param index The index of the parameter to inspect.
+     * @param m 要检视的 “方法”
+     * @param index 要检视的参数序号
      * 
-     * @return A C string describing the type of the parameter at index \e index, or \c NULL
-     *  if method has no parameter index \e index. You must free the string with \c free().
+     * @return 返回一个用于描述方法 序号为 index 的参数类型的 C语言风格字元串
+     *         若方法不存在序号为 index 的参数则返回 NULL，须自行使用 free() 释放记忆体
      */
-    OBJC_EXPORT char *method_copyArgumentType(Method m, unsigned int index) 
+    OBJC_EXPORT char *method_copyArgumentType(Method m, unsigned int index);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns by reference a string describing a method's return type.
+     * 返回方法的返回值类型，并将描述信息写到指定的字元串中
      * 
-     * @param m The method you want to inquire about. 
-     * @param dst The reference string to store the description.
-     * @param dst_len The maximum number of characters that can be stored in \e dst.
+     * @param m 要检视的 “方法”
+     * @param dst 用于存放描述信息的字元串指针
+     * @param dst_len dst 能存储的最大字元数
      *
-     * @note The method's return type string is copied to \e dst.
-     *  \e dst is filled as if \c strncpy(dst, parameter_type, dst_len) were called.
+     * @note 方法的返回值类型描述字元串会通过 strncpy(dst, parameter_type, dst_len) 复制到 dst中
      */
-    OBJC_EXPORT void method_getReturnType(Method m, char *dst, size_t dst_len) 
+    OBJC_EXPORT void method_getReturnType(Method m, char *dst, size_t dst_len);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns by reference a string describing a single parameter type of a method.
+     * 获取一个用于描述方法单个参数的字元串，并将该信息写到指定字元串中R
      * 
-     * @param m The method you want to inquire about. 
-     * @param index The index of the parameter you want to inquire about.
-     * @param dst The reference string to store the description.
-     * @param dst_len The maximum number of characters that can be stored in \e dst.
+     * @param m 要检视的 “方法”
+     * @param index 要检视的参数序号
+     * @param dst The 用于存放描述信息的字元串指针
+     * @param dst_len dst 能存储的最大字元数
      * 
-     * @note The parameter type string is copied to \e dst. \e dst is filled as if \c strncpy(dst, parameter_type, dst_len) 
-     *  were called. If the method contains no parameter with that index, \e dst is filled as
-     *  if \c strncpy(dst, "", dst_len) were called.
+     * @note 参数类型描述字元串会通过 strncpy(dst, parameter_type, dst_len) 复制到 dst 中，
+     *       若方法不存在该参数，则函式执行效果会如 strncpy(dst, "", dst_len) 一样
      */
-    OBJC_EXPORT void method_getArgumentType(Method m, unsigned int index, 
-                                            char *dst, size_t dst_len) 
+    OBJC_EXPORT void method_getArgumentType(Method m, unsigned int index, char *dst, size_t dst_len);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
-    OBJC_EXPORT struct objc_method_description *method_getDescription(Method m) 
+    OBJC_EXPORT struct objc_method_description *method_getDescription(Method m);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Sets the implementation of a method.
+     * 设置 “方法” 中的方法实现
      * 
-     * @param m The method for which to set an implementation.
-     * @param imp The implemention to set to this method.
+     * @param m 要设置的 “方法”
+     * @param imp 要设置到方法的 “方法实现”
      * 
-     * @return The previous implementation of the method.
+     * @return 该方法的旧实现
      */
-    OBJC_EXPORT IMP method_setImplementation(Method m, IMP imp) 
+    OBJC_EXPORT IMP method_setImplementation(Method m, IMP imp);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Exchanges the implementations of two methods.
+     * 交换两个 “方法” 的 “方法实现”
      * 
-     * @param m1 Method to exchange with second method.
-     * @param m2 Method to exchange with first method.
+     * @param m1 要交换实现的 “方法” 一
+     * @param m2 要交换实现的 “方法” 二
      * 
-     * @note This is an atomic version of the following:
+     * @note 此函式相当于以下代码的原子调用版本：
      *  \code 
      *  IMP imp1 = method_getImplementation(m1);
      *  IMP imp2 = method_getImplementation(m2);
@@ -962,299 +952,297 @@
      *  method_setImplementation(m2, imp1);
      *  \endcode
      */
-    OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2) 
+    OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
-    /* Working with Instance Variables */
+    /* 操作 实例变量 相关的函式 */
 
     /** 
-     * Returns the name of an instance variable.
+     * 返回实例变量的名称
      * 
-     * @param v The instance variable you want to enquire about.
+     * @param v 要检视的实例变量
      * 
-     * @return A C string containing the instance variable's name.
+     * @return 一个容纳实例变量名称的 C 语言风格字元串
      */
-    OBJC_EXPORT const char *ivar_getName(Ivar v) 
+    OBJC_EXPORT const char *ivar_getName(Ivar v);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the type string of an instance variable.
+     * 返回实例变量的类型字元串
      * 
-     * @param v The instance variable you want to enquire about.
+     * @param v 要检视的实例变量
      * 
-     * @return A C string containing the instance variable's type encoding.
+     * @return 一个容纳了该实例变量的类型编码的 C 语言风格字元串
      *
-     * @note For possible values, see Objective-C Runtime Programming Guide > Type Encodings.
+     * @note 关于所有可能的值，请参见《Objective-C Runtime Programming Guide》 的《Type Encodings》章节
      */
-    OBJC_EXPORT const char *ivar_getTypeEncoding(Ivar v) 
+    OBJC_EXPORT const char *ivar_getTypeEncoding(Ivar v);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the offset of an instance variable.
+     * 返回实例变量的偏移值
      * 
-     * @param v The instance variable you want to enquire about.
+     * @param v 要检视的实例变量
      * 
-     * @return The offset of \e v.
+     * @return v 的偏移值
      * 
-     * @note For instance variables of type \c id or other object types, call \c object_getIvar
-     *  and \c object_setIvar instead of using this offset to access the instance variable data directly.
+     * @note 对于 id 或其他对象型 类型的实例变量，
+     *       应使用 object_getIvar 和 object_setIvar ，而不使用此偏移值来直接访问实例变量
      */
-    OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v) 
+    OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
-    /* Working with Properties */
+    /* 操作 “属性” 相关的函式 */
 
     /** 
-     * Returns the name of a property.
+     * 返回 “属性” 的名称
      * 
-     * @param property The property you want to inquire about.
+     * @param 要检视的 “属性”
      * 
-     * @return A C string containing the property's name.
+     * @return 一个容纳了该 “属性” 名称的 C 语言风格字元串
      */
-    OBJC_EXPORT const char *property_getName(objc_property_t property) 
+    OBJC_EXPORT const char *property_getName(objc_property_t property);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the attribute string of a property.
+     * 返回 “属性” 的 “特性” 字元串
      * 
-     * @param property A property.
+     * @param 要检视的 “属性”
      *
-     * @return A C string containing the property's attributes.
+     * @return 一个容纳了该 “属性” 的 “特性” 的 C 语言风格字元串
      * 
-     * @note The format of the attribute string is described in Declared Properties in Objective-C Runtime Programming Guide.
+     * @note 关于 “特性” 字元串的格式描述，可参见《Objective-C Runtime Programming Guide》
      */
-    OBJC_EXPORT const char *property_getAttributes(objc_property_t property) 
+    OBJC_EXPORT const char *property_getAttributes(objc_property_t property);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns an array of property attributes for a property. 
+     * 返回 “属性” 的 “特性” 列表
      * 
-     * @param property The property whose attributes you want copied.
-     * @param outCount The number of attributes returned in the array.
+     * @param property 要复制 “特性” 列表的 “属性”
+     * @param outCount 函式返回的阵列中 “特性” 总数
      * 
-     * @return An array of property attributes; must be free'd() by the caller. 
+     * @return 一个 “特性” 列表， 必须由调用者通过 free() 释放记忆体
      */
-    OBJC_EXPORT objc_property_attribute_t *property_copyAttributeList(objc_property_t property, unsigned int *outCount)
+    OBJC_EXPORT objc_property_attribute_t *property_copyAttributeList(objc_property_t property, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Returns the value of a property attribute given the attribute name.
+     * 返回 “属性” 的指名 “特性” 值
      * 
-     * @param property The property whose attribute value you are interested in.
-     * @param attributeName C string representing the attribute name.
+     * @param property 要检视的 “属性”
+     * @param attributeName 用于表示 “特性” 名称的 C 语言风格字元串
      *
-     * @return The value string of the attribute \e attributeName if it exists in
-     *  \e property, \c nil otherwise. 
+     * @return 若 “属性” 存在该指名 “特性” 则返回表示其值的字元串，否则返回 nil
      */
-    OBJC_EXPORT char *property_copyAttributeValue(objc_property_t property, const char *attributeName)
+    OBJC_EXPORT char *property_copyAttributeValue(objc_property_t property, const char *attributeName);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
-    /* Working with Protocols */
+    /* 操作 “协议” 相关的函式 */
 
     /** 
-     * Returns a specified protocol.
+     * 返回指名 “协议”
      * 
-     * @param name The name of a protocol.
+     * @param name “协议” 名称
      * 
-     * @return The protocol named \e name, or \c NULL if no protocol named \e name could be found.
+     * @return 指名 “协议”，若不存在使用该名称的 “协议”，则返回 NULL
      * 
      * @note This function acquires the runtime lock.
      */
-    OBJC_EXPORT Protocol *objc_getProtocol(const char *name)
+    OBJC_EXPORT Protocol *objc_getProtocol(const char *name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns an array of all the protocols known to the runtime.
+     * 返回 “运行时” 中所有 “协议” 列表
      * 
-     * @param outCount Upon return, contains the number of protocols in the returned array.
+     * @param outCount 返回列表中 “协议” 的总数
      * 
-     * @return A C array of all the protocols known to the runtime. The array contains \c *outCount
-     *  pointers followed by a \c NULL terminator. You must free the list with \c free().
+     * @return 存放 “运行时” 中已存在 “协议” C 语言风格阵列。
+     *         阵列中包含 *outCount 个 “协议”，并以 NULL 结尾。 须自行使用 free() 释放记忆体
      * 
      * @note This function acquires the runtime lock.
      */
-    OBJC_EXPORT Protocol * __unsafe_unretained *objc_copyProtocolList(unsigned int *outCount)
+    OBJC_EXPORT Protocol * __unsafe_unretained *objc_copyProtocolList(unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a Boolean value that indicates whether one protocol conforms to another protocol.
+     * 判断某 “协议” 是否采用了另一个 “协议”
      * 
-     * @param proto A protocol.
-     * @param other A protocol.
+     * @param proto “协议”
+     * @param other 判断是否被采用的 “协议”
      * 
-     * @return \c YES if \e proto conforms to \e other, otherwise \c NO.
+     * @return 若 proto 采用了 other 则返回 YES，否则返回 NO
      * 
-     * @note One protocol can incorporate other protocols using the same syntax 
-     *  that classes use to adopt a protocol:
+     * @note 一个 “协议” 可以使用与 “类” 采用 “协议” 相同的语法，以合并另一个 “协议”：
      *  \code
      *  @protocol ProtocolName < protocol list >
      *  \endcode
-     *  All the protocols listed between angle brackets are considered part of the ProtocolName protocol.
+     *  尖括号中所有的 “协议” 都可以认为是 ProtocolName “协议” 的一部分
      */
-    OBJC_EXPORT BOOL protocol_conformsToProtocol(Protocol *proto, Protocol *other)
+    OBJC_EXPORT BOOL protocol_conformsToProtocol(Protocol *proto, Protocol *other);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a Boolean value that indicates whether two protocols are equal.
+     * 判断两个 “协议” 是否等同
      * 
-     * @param proto A protocol.
-     * @param other A protocol.
+     * @param proto “协议” 一
+     * @param other “协议” 二
      * 
-     * @return \c YES if \e proto is the same as \e other, otherwise \c NO.
+     * @return proto 与 other 等同则返回 YES，否则返回 NO
      */
-    OBJC_EXPORT BOOL protocol_isEqual(Protocol *proto, Protocol *other)
+    OBJC_EXPORT BOOL protocol_isEqual(Protocol *proto, Protocol *other);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the name of a protocol.
+     * 返回 “协议” 的名称
      * 
-     * @param p A protocol.
+     * @param p "协议"
      * 
-     * @return The name of the protocol \e p as a C string.
+     * @return 返回代表 “协议” 名称的 C 语言风格字元串
      */
-    OBJC_EXPORT const char *protocol_getName(Protocol *p)
+    OBJC_EXPORT const char *protocol_getName(Protocol *p);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns a method description structure for a specified method of a given protocol.
+     * 返回给定 “协议” 中指定方法的方法描述结构
      * 
-     * @param p A protocol.
-     * @param aSel A selector.
-     * @param isRequiredMethod A Boolean value that indicates whether aSel is a required method.
-     * @param isInstanceMethod A Boolean value that indicates whether aSel is an instance method.
+     * @param p “协议”
+     * @param aSel “选择器”
+     * @param isRequiredMethod 指示 aSel 是否是一个必要方法(required method)
+     * @param isInstanceMethod 指示 aSel 是否是一个实例方法
      * 
-     * @return An \c objc_method_description structure that describes the method specified by \e aSel,
-     *  \e isRequiredMethod, and \e isInstanceMethod for the protocol \e p.
-     *  If the protocol does not contain the specified method, returns an \c objc_method_description structure
-     *  with the value \c {NULL, \c NULL}.
+     * @return 一个描述该 “协议” 中符合 aSel 选择器，
+               isRequiredMethod 和 isInstanceMethod 描述的方法的 objc_method_description 结构体
+     *         若该 “协议” 并未包含指定的方法，则返回值为 {NULL, NULL} 的 objc_method_description 结构体
      * 
-     * @note This function recursively searches any protocols that this protocol conforms to.
+     * @note 本函式会递归搜索该 “协议” 采用的任何 “协议”
      */
-    OBJC_EXPORT struct objc_method_description protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
+    OBJC_EXPORT struct objc_method_description protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns an array of method descriptions of methods meeting a given specification for a given protocol.
+     * 返回 “协议” 中符合条件的方法描述信息列表
      * 
-     * @param p A protocol.
-     * @param isRequiredMethod A Boolean value that indicates whether returned methods should
-     *  be required methods (pass YES to specify required methods).
-     * @param isInstanceMethod A Boolean value that indicates whether returned methods should
-     *  be instance methods (pass YES to specify instance methods).
-     * @param outCount Upon return, contains the number of method description structures in the returned array.
+     * @param p "协议"
+     * @param isRequiredMethod 指示返回的方法是否应该是一个 “必要方法”(required methods)，传递 YES 则表示是。
+     * @param isInstanceMethod 指示返回的方法是否应该是一个 “实例方法”，传递 YES 则表示是。
+     * @param outCount 用于表示函式返回的列表里的方法描述结构体总数
      * 
-     * @return A C array of \c objc_method_description structures containing the names and types of \e p's methods 
-     *  specified by \e isRequiredMethod and \e isInstanceMethod. The array contains \c *outCount pointers followed
-     *  by a \c NULL terminator. You must free the list with \c free().
-     *  If the protocol declares no methods that meet the specification, \c NULL is returned and \c *outCount is 0.
+     * @return 一个用于存放 “协议” 中符合 isRequiredMethod 和 isInstanceMethod 匹配条件的方法
+     *         描述信息的 objc_method_description 类型结构体（用于描述方法的名称与类型的）列表
+     *         列表包含 *outCount 个指针并由 NULL 结尾，须自行使用 free() 释放列表占用的记忆体空间
+     *         若该 “协议” 未声明任何符合条件的方法，则函式返回 NULL 且 *outCount 值为 0
      * 
-     * @note Methods in other protocols adopted by this protocol are not included.
+     * @note 采用自其他 “协议” 的方法不会包含在返回值中
      */
-    OBJC_EXPORT struct objc_method_description *protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BOOL isInstanceMethod, unsigned int *outCount)
+    OBJC_EXPORT struct objc_method_description *protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BOOL isInstanceMethod, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the specified property of a given protocol.
+     * 返回给定 “协议” 中的指名 “属性”
      * 
-     * @param proto A protocol.
-     * @param name The name of a property.
-     * @param isRequiredProperty A Boolean value that indicates whether name is a required property.
-     * @param isInstanceProperty A Boolean value that indicates whether name is a required property.
+     * @param proto “协议”
+     * @param name “属性” 名称
+     * @param isRequiredProperty 指示该 “属性” 是否是一个 “必要属性”(required property)
+     * @param isInstanceProperty 指示该 “属性” 是否是一个 “实例属性”
      * 
-     * @return The property specified by \e name, \e isRequiredProperty, and \e isInstanceProperty for \e proto,
-     *  or \c NULL if none of \e proto's properties meets the specification.
+     * @return proto 中符合 name 及 isRequiredProperty 和 isInstanceProperty 三个条件的 “属性”，
+     *         若 “协议” 中不存在符合条件的 “属性” 则返回 NULL
      */
-    OBJC_EXPORT objc_property_t protocol_getProperty(Protocol *proto, const char *name, BOOL isRequiredProperty, BOOL isInstanceProperty)
+    OBJC_EXPORT objc_property_t protocol_getProperty(Protocol *proto, const char *name, BOOL isRequiredProperty, BOOL isInstanceProperty);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns an array of the properties declared by a protocol.
+     * 返回 “协议” 定的 “属性” 列表
      * 
-     * @param proto A protocol.
-     * @param outCount Upon return, contains the number of elements in the returned array.
+     * @param proto “协议”
+     * @param outCount 返回列表中 “属性” 总数
      * 
-     * @return A C array of pointers of type \c objc_property_t describing the properties declared by \e proto.
-     *  Any properties declared by other protocols adopted by this protocol are not included. The array contains
-     *  \c *outCount pointers followed by a \c NULL terminator. You must free the array with \c free().
-     *  If the protocol declares no properties, \c NULL is returned and \c *outCount is \c 0.
+     * @return 一个容纳 proto 中声明的所有 “属性” 的 objc_property_t 类型 C 语言风格阵列
+     *         任何声明自该 “协议” 采用的其他 “协议” 的 “属性” 均不会包含在返回结果中
+     *         列表包含 *outCount 个指针并以 NULL 结尾。，须自行使用 free() 列表占有的记忆体空间。
+     *         若 “协议” 中未定义 “属性”，则返回 NULL 且 *outCount 值为 0
      */
-    OBJC_EXPORT objc_property_t *protocol_copyPropertyList(Protocol *proto, unsigned int *outCount)
+    OBJC_EXPORT objc_property_t *protocol_copyPropertyList(Protocol *proto, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns an array of the protocols adopted by a protocol.
+     * 返回某 “协议” 采用的 “协议” 列表
      * 
-     * @param proto A protocol.
-     * @param outCount Upon return, contains the number of elements in the returned array.
+     * @param proto “协议”
+     * @param outCount 返回列表中 “协议” 总数
      * 
-     * @return A C array of protocols adopted by \e proto. The array contains \e *outCount pointers
-     *  followed by a \c NULL terminator. You must free the array with \c free().
-     *  If the protocol declares no properties, \c NULL is returned and \c *outCount is \c 0.
+     * @return 一个用于容纳 proto 采用的 “协议” 的 C 语言风格阵列
+     *         阵列包含 *outCount 个指针并以 NULL 结尾。须自行使用 free() 释放阵列占有的记忆体空间
+     *         若该 “协议” 未采用任何 “协议” 则返回 NULL 且 *outCount 值为 0
      */
-    OBJC_EXPORT Protocol * __unsafe_unretained *protocol_copyProtocolList(Protocol *proto, unsigned int *outCount)
+    OBJC_EXPORT Protocol * __unsafe_unretained *protocol_copyProtocolList(Protocol *proto, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Creates a new protocol instance that cannot be used until registered with
-     * \c objc_registerProtocol()
+     * 创建一个新的待注册 “协议” 实例C
      * 
-     * @param name The name of the protocol to create.
+     * @param name 要创建的 “协议” 名称
      *
-     * @return The Protocol instance on success, \c nil if a protocol
-     *  with the same name already exists. 
-     * @note There is no dispose method for this. 
+     * @return 创建成功则返回该 “协议” 实例，若已存在同名 “协议” 则返回 nil
+     * @note 新实例仅在注册后才可使用，可通过 objc_registerProtocol 函式注册 “协议” 实例
+     * @note 不存在与此对应的 dispose 方法
+     * @see objc_registerProtocol
      */
-    OBJC_EXPORT Protocol *objc_allocateProtocol(const char *name) 
+    OBJC_EXPORT Protocol *objc_allocateProtocol(const char *name);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Registers a newly constructed protocol with the runtime. The protocol
-     * will be ready for use and is immutable after this.
-     * 
-     * @param proto The protocol you want to register.
+     * 向 “运行时” 注册一个新构建的 “协议”
+     *
+     * @param proto 要注册的 “协议”
+     *
+     * @note “协议” 在注册后即可使用，且其状态为不可改变
      */
-    OBJC_EXPORT void objc_registerProtocol(Protocol *proto) 
+    OBJC_EXPORT void objc_registerProtocol(Protocol *proto);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Adds a method to a protocol. The protocol must be under construction.
+     * 为 “协议” 添加方法
      * 
-     * @param proto The protocol to add a method to.
-     * @param name The name of the method to add.
-     * @param types A C string that represents the method signature.
-     * @param isRequiredMethod YES if the method is not an optional method.
-     * @param isInstanceMethod YES if the method is an instance method. 
+     * @param proto 要添加方法的 “协议”
+     * @param name 方法名称
+     * @param types 描述方法签名的 C 语言风格字元串
+     * @param isRequiredMethod 指示添加的方法是否为 “必要方法”
+     * @param isInstanceMethod 指示添加的方法是否为 “实例方法”
+     *
+     * @note 该 “协议” 必须还处于 “构建期”（也就是未注册状态）
+     * @see objc_registerProtocol
      */
-    OBJC_EXPORT void protocol_addMethodDescription(Protocol *proto, SEL name, const char *types, BOOL isRequiredMethod, BOOL isInstanceMethod) 
+    OBJC_EXPORT void protocol_addMethodDescription(Protocol *proto, SEL name, const char *types, BOOL isRequiredMethod, BOOL isInstanceMethod);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Adds an incorporated protocol to another protocol. The protocol being
-     * added to must still be under construction, while the additional protocol
-     * must be already constructed.
+     * 向某 “协议” 追加采用 “协议”
      * 
-     * @param proto The protocol you want to add to, it must be under construction.
-     * @param addition The protocol you want to incorporate into \e proto, it must be registered.
+     * @param proto 采用列表要进行追加操作的 “协议”，该 “协议” 必须还在 “构建期”
+     * @param addition 要追加到 proto 采用列表的 “采用”，该 “协议” 必须已注册
      */
-    OBJC_EXPORT void protocol_addProtocol(Protocol *proto, Protocol *addition) 
+    OBJC_EXPORT void protocol_addProtocol(Protocol *proto, Protocol *addition);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Adds a property to a protocol. The protocol must be under construction. 
+     * 向某 “协议” 添加 “属性”
      * 
-     * @param proto The protocol to add a property to.
-     * @param name The name of the property.
-     * @param attributes An array of property attributes.
-     * @param attributeCount The number of attributes in \e attributes.
-     * @param isRequiredProperty YES if the property (accessor methods) is not optional. 
-     * @param isInstanceProperty YES if the property (accessor methods) are instance methods. 
-     *  This is the only case allowed fo a property, as a result, setting this to NO will 
-     *  not add the property to the protocol at all. 
+     * @param proto 要添加 “属性” 的 “协议”
+     * @param name “属性” 名称
+     * @param attributes “属性” 的 “特性” 列表
+     * @param attributeCount “特性” 列表长度
+     * @param isRequiredProperty 指示 “属性”（访问器方法(accessor methods)）是否是 “必要方法”
+     * @param isInstanceProperty 指示 “属性”（访问器方法(accessor methods)）是否是 “实例方法”
+     *        这里有一个仅针对 “属性” 有效的情况，如果将其设置为 NO 则 “属性” 不会被添加到 “协议”
+     *
+     * @note 该 “协议” 必须处于 “构建期”
      */
-    OBJC_EXPORT void protocol_addProperty(Protocol *proto, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount, BOOL isRequiredProperty, BOOL isInstanceProperty)
+    OBJC_EXPORT void protocol_addProperty(Protocol *proto, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount, BOOL isRequiredProperty, BOOL isInstanceProperty);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
@@ -1455,15 +1443,24 @@
      * These are options to objc_setAssociatedObject()
      */
     enum {
-        OBJC_ASSOCIATION_ASSIGN = 0,           /**< Specifies a weak reference to the associated object. */
-        OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**< Specifies a strong reference to the associated object. 
-                                                *   The association is not made atomically. */
-        OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**< Specifies that the associated object is copied. 
-                                                *   The association is not made atomically. */
-        OBJC_ASSOCIATION_RETAIN = 01401,       /**< Specifies a strong reference to the associated object.
-                                                *   The association is made atomically. */
-        OBJC_ASSOCIATION_COPY = 01403          /**< Specifies that the associated object is copied.
-                                                *   The association is made atomically. */
+        /**< Specifies a weak reference to the associated object. */
+        OBJC_ASSOCIATION_ASSIGN = 0,
+        
+        /**< Specifies a strong reference to the associated object.
+         *   The association is not made atomically. */
+        OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1,
+        
+        /**< Specifies that the associated object is copied.
+         *   The association is not made atomically. */
+        OBJC_ASSOCIATION_COPY_NONATOMIC = 3,
+        
+        /**< Specifies a strong reference to the associated object.
+         *   The association is made atomically. */
+        OBJC_ASSOCIATION_RETAIN = 01401,
+        
+        /**< Specifies that the associated object is copied.
+         *   The association is made atomically. */
+        OBJC_ASSOCIATION_COPY = 01403
     };
 
     /// Type to specify the behavior of an association.
