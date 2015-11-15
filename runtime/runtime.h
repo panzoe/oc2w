@@ -645,102 +645,100 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Adds a new instance variable to a class.
+     * 向 ”类“ 添加一个新的实例变量
      * 
-     * @return YES if the instance variable was added successfully, otherwise NO 
-     *         (for example, the class already contains an instance variable with that name).
+     * @return 添加成功返回 YES，否则返回 NO （例如，”类“ 中已存在了同名的实例变量）
      *
-     * @note This function may only be called after objc_allocateClassPair and before objc_registerClassPair. 
-     *       Adding an instance variable to an existing class is not supported.
-     * @note The class must not be a metaclass. Adding an instance variable to a metaclass is not supported.
+     * @note 此函式只能在 后于 objc_allocateClassPair 且先于 objc_registerClassPair 的时期被调用
+     *       向现有的 ”类“ 添加实例变量的作法是不支援的
+     * @note 这个 ”类“ 不能是 ”元类“，向 ”元类“ 添加实例变量的行为也是不被支援的
      * @note The instance variable's minimum alignment in bytes is 1<<align. The minimum alignment of an instance 
      *       variable depends on the ivar's type and the machine architecture. 
      *       For variables of any pointer type, pass log2(sizeof(pointer_type)).
      */
-    OBJC_EXPORT BOOL class_addIvar(Class cls, const char *name, size_t size, 
-                                   uint8_t alignment, const char *types) 
+    OBJC_EXPORT BOOL class_addIvar(Class cls, const char *name, size_t size, uint8_t alignment, const char *types);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Adds a protocol to a class.
+     * 请求 ”类“ 追加采用一个新 ”协议“
      * 
-     * @param cls The class to modify.
-     * @param protocol The protocol to add to \e cls.
+     * @param cls 欲修改的 ”类“
+     * @param protocol 要添加到 cls 的 ”协议“
      * 
-     * @return \c YES if the method was added successfully, otherwise \c NO 
-     *  (for example, the class already conforms to that protocol).
+     * @return 添加成功返回 YES，否则返回 NO （例如，该 ”类“ 已经采用了这个 ”协议“）
      */
-    OBJC_EXPORT BOOL class_addProtocol(Class cls, Protocol *protocol) 
+    OBJC_EXPORT BOOL class_addProtocol(Class cls, Protocol *protocol);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Adds a property to a class.
+     * 向类添加一个 ”属性“
      * 
-     * @param cls The class to modify.
-     * @param name The name of the property.
-     * @param attributes An array of property attributes.
-     * @param attributeCount The number of attributes in \e attributes.
+     * @param cls 欲修改的 ”类“
+     * @param name ”属性“ 的名称
+     * @param attributes 该 ”属性“ 的所有特性列表
+     * @param attributeCount 特性列表的总数
      * 
      * @return \c YES if the property was added successfully, otherwise \c NO
      *  (for example, the class already has that property).
      */
-    OBJC_EXPORT BOOL class_addProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount)
+    OBJC_EXPORT BOOL class_addProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Replace a property of a class. 
+     * 替换 ”类“ 的一个 ”属性“
      * 
-     * @param cls The class to modify.
-     * @param name The name of the property.
-     * @param attributes An array of property attributes.
-     * @param attributeCount The number of attributes in \e attributes. 
+     * @param cls 欲修改的 ”类“
+     * @param name ”属性“ 的名称
+     * @param attributes 该 ”属性“ 的所有特性列表
+     * @param attributeCount 特性列表的总数
      */
-    OBJC_EXPORT void class_replaceProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount)
+    OBJC_EXPORT void class_replaceProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Sets the Ivar layout for a given class.
+     * 设置给定 ”类“ 的 ”实例变量布局“ (Ivar layout)
      * 
-     * @param cls The class to modify.
-     * @param layout The layout of the \c Ivars for \e cls.
+     * @param cls 欲修改的 ”类“
+     * @param layout 目标布局值
      */
-    OBJC_EXPORT void class_setIvarLayout(Class cls, const uint8_t *layout)
+    OBJC_EXPORT void class_setIvarLayout(Class cls, const uint8_t *layout);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Sets the layout for weak Ivars for a given class.
+     * 设置给定 ”类“ 的 ”弱实例变量布局“ (layout forweak Ivars)
      * 
-     * @param cls The class to modify.
-     * @param layout The layout of the weak Ivars for \e cls.
+     * @param cls 欲修改的 ”类“
+     * @param layout 目标布局值
      */
-    OBJC_EXPORT void class_setWeakIvarLayout(Class cls, const uint8_t *layout)
+    OBJC_EXPORT void class_setWeakIvarLayout(Class cls, const uint8_t *layout);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
-    /** 
-     * Used by CoreFoundation's toll-free bridging.
-     * Return the id of the named class.
+    /**
+     * Return 返回指名 ”类“
      * 
      * @return The id of the named class, or an uninitialized class
      *  structure that will be used for the class when and if it does 
      *  get loaded.
+     *
+     * @note 此函式提供给 CoreFoundation 用来完成无缝桥接工作
      * 
-     * @warning Do not call this function yourself.
+     * @warning 请勿自行调用此函式
      */
     OBJC_EXPORT Class objc_getFutureClass(const char *name) 
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
          OBJC_ARC_UNAVAILABLE;
 
     /** 
-     * Used by CoreFoundation's toll-free bridging.
+     * 此函式提供给 CoreFoundation 用来完成无缝桥接工作
      * 
-     * @warning Do not call this function yourself.
+     * @warning 请勿自行调用此函式
      */
     OBJC_EXPORT void objc_setFutureClass(Class cls, const char *name) 
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0)
          OBJC_ARC_UNAVAILABLE;
 
 
-    /* Instantiating Classes */
+    /* 实例化 ”类“ 相关的函式 */
 
     /** 
      * Creates an instance of a class, allocating memory for the class in the 
