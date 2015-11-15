@@ -1246,95 +1246,93 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
-    /* Working with Libraries */
+    /* 操作 库 相关的函式 */
 
     /** 
-     * Returns the names of all the loaded Objective-C frameworks and dynamic
-     * libraries.
+     * 返回已装载的 Objective-C 框架（frameworks） 和 动态库（dynamic libraries）的名称
      * 
-     * @param outCount The number of names returned.
+     * @param outCount 返回的名称阵列长度
      * 
-     * @return An array of C strings of names. Must be free()'d by caller.
+     * @return 一个容纳了名称列表的 C 语言风格阵列。调用者须自行使用 free() 释放记忆体空间
      */
-    OBJC_EXPORT const char **objc_copyImageNames(unsigned int *outCount) 
+    OBJC_EXPORT const char **objc_copyImageNames(unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the dynamic library name a class originated from.
+     * 返回某个 “类” 所属 “动态库” 名称
      * 
-     * @param cls The class you are inquiring about.
+     * @param cls 用于查询的 “类”
      * 
-     * @return The name of the library containing this class.
+     * @return 包含该 “类” 的 “库” 名称
      */
-    OBJC_EXPORT const char *class_getImageName(Class cls) 
+    OBJC_EXPORT const char *class_getImageName(Class cls);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Returns the names of all the classes within a library.
+     * 返回某个 “库” 中所有 “类” 的名称
      * 
-     * @param image The library or framework you are inquiring about.
-     * @param outCount The number of class names returned.
+     * @param image 要查询的 “库” 或 “框架”
+     * @param outCount “类” 名总数
      * 
-     * @return An array of C strings representing the class names.
+     * @return 一个容纳所有 “类” 名的 C 语言风格阵列
      */
-    OBJC_EXPORT const char **objc_copyClassNamesForImage(const char *image, 
-                                                         unsigned int *outCount) 
+    OBJC_EXPORT const char **objc_copyClassNamesForImage(const char *image, unsigned int *outCount);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
-    /* Working with Selectors */
+    /* 操作 选择器 相关的函式 */
 
     /** 
-     * Returns the name of the method specified by a given selector.
+     * 返回给定 “方法选择器” 的名称
      * 
-     * @param sel A pointer of type \c SEL. Pass the selector whose name you wish to determine.
+     * @param sel SEL 类型指针，传递要检测的选择器
      * 
-     * @return A C string indicating the name of the selector.
+     * @return 用于表示选择器名称的 C 语言风格字元串
      */
-    OBJC_EXPORT const char *sel_getName(SEL sel)
+    OBJC_EXPORT const char *sel_getName(SEL sel);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Registers a method name with the Objective-C runtime system.
+     * 向 Objective-C “运行时系统” 注册一个方法名
      * 
-     * @param str A pointer to a C string. Pass the name of the method you wish to register.
+     * @param str 一个 C 语言风格字元串指针，用于传递要注册的方法名称
      * 
-     * @return A pointer of type SEL specifying the selector for the named method.
+     * @return  一个指向命名方法选择器的 SEL 类型指针
      * 
-     * @note The implementation of this method is identical to the implementation of \c sel_registerName.
-     * @note Prior to OS X version 10.0, this method tried to find the selector mapped to the given name
-     *  and returned \c NULL if the selector was not found. This was changed for safety, because it was
-     *  observed that many of the callers of this function did not check the return value for \c NULL.
+     * @note 该方法实现已与函式名表意不同
+     * @note 此方法实现与 sel_registerName 函式实现是相同的
+     * @note 在 OS X 10.0 系统之前，此方法会尝试寻找此名称映射的选择器，如未找到则返回 NULL
+     *       这一转变是安全的，因为事实上多数调用的方法并不会对返回值进行 NULL检查
      */
-    OBJC_EXPORT SEL sel_getUid(const char *str)
+    OBJC_EXPORT SEL sel_getUid(const char *str);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Registers a method with the Objective-C runtime system, maps the method 
-     * name to a selector, and returns the selector value.
+     * 向 Objective-C “运行时系统” 注册一个方法
      * 
-     * @param str A pointer to a C string. Pass the name of the method you wish to register.
+     * @param str 要注册的方法命名的 C 语言风格字元串指针
      * 
-     * @return A pointer of type SEL specifying the selector for the named method.
+     * @return 一个指向命名方法的选择器的 SEL 类型指针
+     *
+     * @note 方法经函式注册后，其名称会映射到对应的选择器，并作为函式返回值
      * 
-     * @note You must register a method name with the Objective-C runtime system to obtain the
-     *  method’s selector before you can add the method to a class definition. If the method name
-     *  has already been registered, this function simply returns the selector.
+     * @note 在向 “类定义” 添加方法前，选择器必须已经用其名称向 Objective-C “运行时系统” 注册过了
+     *       如果方法名已被注册，此函式会直接返回该选择器
      */
-    OBJC_EXPORT SEL sel_registerName(const char *str)
+    OBJC_EXPORT SEL sel_registerName(const char *str);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Returns a Boolean value that indicates whether two selectors are equal.
+     * 判断两个选择器是否等同
      * 
-     * @param lhs The selector to compare with rhs.
-     * @param rhs The selector to compare with lhs.
+     * @param lhs 用于比较的选择器之一
+     * @param rhs 用于比较的选择器之一
      * 
-     * @return \c YES if \e rhs and \e rhs are equal, otherwise \c NO.
+     * @return 若两者等同则返回 YES，否则返回 NO
      * 
-     * @note sel_isEqual is equivalent to ==.
+     * @note sel_isEqual 相当于 ==
      */
-    OBJC_EXPORT BOOL sel_isEqual(SEL lhs, SEL rhs) 
+    OBJC_EXPORT BOOL sel_isEqual(SEL lhs, SEL rhs);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
