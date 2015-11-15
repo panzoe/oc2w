@@ -28,9 +28,10 @@
 #include "runtime.h"
 #include "objc-os.h"
 #include "message.h"
-#if SUPPORT_GC
-#include "auto_zone.h"
-#endif
+
+//#   if SUPPORT_GC
+//#       include "auto_zone.h"
+//#   endif
 
 enum {
     // external references to data segment objects all use this type

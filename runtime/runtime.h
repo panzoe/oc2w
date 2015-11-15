@@ -1336,7 +1336,7 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
-    /* Objective-C Language Features */
+    /* Objective-C 语言特性 */
 
     /** 
      * This function is inserted by the compiler when a mutation

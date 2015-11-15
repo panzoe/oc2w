@@ -35,8 +35,8 @@
      * 
      * @return OBJC_SYNC_SUCCESS once lock is acquired.  
      */
-    OBJC_EXPORT  int objc_sync_enter(id obj)
-        __OSX_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
+    OBJC_EXPORT  int objc_sync_enter(id obj);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
 
     /** 
      * End synchronizing on 'obj'. 
@@ -45,16 +45,13 @@
      * 
      * @return OBJC_SYNC_SUCCESS or OBJC_SYNC_NOT_OWNING_THREAD_ERROR
      */
-    OBJC_EXPORT  int objc_sync_exit(id obj)
-        __OSX_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
+    OBJC_EXPORT  int objc_sync_exit(id obj);
+//        __OSX_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
 
-    // The wait/notify functions have never worked correctly and no longer exist.
-    OBJC_EXPORT  int objc_sync_wait(id obj, long long milliSecondsMaxWait) 
-        UNAVAILABLE_ATTRIBUTE;
-    OBJC_EXPORT  int objc_sync_notify(id obj) 
-        UNAVAILABLE_ATTRIBUTE;
-    OBJC_EXPORT  int objc_sync_notifyAll(id obj) 
-        UNAVAILABLE_ATTRIBUTE;
+    // 等待/通知 函式永远无法正常工作，未来将移除
+    OBJC_EXPORT  int objc_sync_wait(id obj, long long milliSecondsMaxWait) UNAVAILABLE_ATTRIBUTE;
+    OBJC_EXPORT  int objc_sync_notify(id obj) UNAVAILABLE_ATTRIBUTE;
+    OBJC_EXPORT  int objc_sync_notifyAll(id obj) UNAVAILABLE_ATTRIBUTE;
 
     enum {
         OBJC_SYNC_SUCCESS                 = 0,

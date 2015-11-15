@@ -21,24 +21,24 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#ifndef _OBJC_ACCESSORS_H_
-#define _OBJC_ACCESSORS_H_
+#   ifndef _OBJC_ACCESSORS_H_
+#       define _OBJC_ACCESSORS_H_
 
-#include <objc/objc.h>
-#include <stddef.h>
+#       include <objc/objc.h>
+#       include <stddef.h>
 
-__BEGIN_DECLS
+        __BEGIN_DECLS
 
-#if SUPPORT_GC
+//            #if SUPPORT_GC
+//
+//                extern void objc_setProperty_non_gc(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL atomic, signed char shouldCopy);
+//                extern id objc_getProperty_non_gc(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic);
+//
+//                extern void objc_setProperty_gc(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL atomic, signed char shouldCopy);
+//                extern id objc_getProperty_gc(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic);
+//
+//#           endif
 
-extern void objc_setProperty_non_gc(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL atomic, signed char shouldCopy);
-extern id objc_getProperty_non_gc(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic);
+        __END_DECLS
 
-extern void objc_setProperty_gc(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL atomic, signed char shouldCopy);
-extern id objc_getProperty_gc(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic);
-
-#endif
-
-__END_DECLS
-
-#endif
+#   endif

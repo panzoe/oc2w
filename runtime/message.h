@@ -281,14 +281,20 @@
 
     typedef void* marg_list;
 
-    OBJC_EXPORT id objc_msgSendv(id self, SEL op, size_t arg_size, marg_list arg_frame) OBJC2_UNAVAILABLE;
-    OBJC_EXPORT void objc_msgSendv_stret(void *stretAddr, id self, SEL op, size_t arg_size, marg_list arg_frame) OBJC2_UNAVAILABLE;
+    OBJC_EXPORT
+        id objc_msgSendv(id self, SEL op, size_t arg_size, marg_list arg_frame)
+    OBJC2_UNAVAILABLE;
+    OBJC_EXPORT
+        void objc_msgSendv_stret(void *stretAddr, id self, SEL op, size_t arg_size, marg_list arg_frame)
+    OBJC2_UNAVAILABLE;
     /* Note that objc_msgSendv_stret() does not return a structure type, 
      * and should not be cast to do so. This is unlike objc_msgSend_stret() 
      * and objc_msgSendSuper_stret().
      */
     #if defined(__i386__)
-    OBJC_EXPORT double objc_msgSendv_fpret(id self, SEL op, unsigned arg_size, marg_list arg_frame) OBJC2_UNAVAILABLE;
+    OBJC_EXPORT
+        double objc_msgSendv_fpret(id self, SEL op, unsigned arg_size, marg_list arg_frame)
+    OBJC2_UNAVAILABLE;
     #endif
 
 
