@@ -1370,42 +1370,36 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
     /** 
-     * Creates a pointer to a function that will call the block
-     * when the method is called.
+     * 创建一个函式指针，其指向的函式会在被调用时，调用指定的 “代码块”
      * 
-     * @param block The block that implements this method. Its signature should
-     *  be: method_return_type ^(id self, method_args...). 
-     *  The selector is not available as a parameter to this block.
-     *  The block is copied with \c Block_copy().
+     * @param block 方法 “代码块”，其签名应为：method_return_type ^(id self, method_args...)
+     *        选择器是无法作为 “代码块” 的参数的
+     *        此函式会对该 “代码块” 使用 Block_copy() 进行拷贝
      * 
-     * @return The IMP that calls this block. Must be disposed of with
-     *  \c imp_removeBlock.
+     * @return “方法”（IMP 型数据），该方法负责调用 “代码块”，该 “方法” 必须使用 imp_removeBlock 处理释放
      */
-    OBJC_EXPORT IMP imp_implementationWithBlock(id block)
+    OBJC_EXPORT IMP imp_implementationWithBlock(id block);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Return the block associated with an IMP that was created using
-     * \c imp_implementationWithBlock.
+     * 从 imp_implementationWithBlock 创建的 “方法” 中获取其关联的 “代码块”
      * 
-     * @param anImp The IMP that calls this block.
+     * @param anImp 与 “代码块” 关联的 “方法”
      * 
-     * @return The block called by \e anImp.
+     * @return 与 “方法” 相关联的 “代码块”
      */
-    OBJC_EXPORT id imp_getBlock(IMP anImp)
+    OBJC_EXPORT id imp_getBlock(IMP anImp);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 
-     * Disassociates a block from an IMP that was created using
-     * \c imp_implementationWithBlock and releases the copy of the 
-     * block that was created.
+     * 对由 imp_implementationWithBlock 创建的 “方法” 及与其关联的 “代码块” 进行 “去关联” 处理
+     * 并释放在创建 “方法” 时生成的 “代码块” 复本
      * 
-     * @param anImp An IMP that was created using \c imp_implementationWithBlock.
+     * @param 由 imp_implementationWithBlock 创建的 “方法”
      * 
-     * @return YES if the block was released successfully, NO otherwise. 
-     *  (For example, the block might not have been used to create an IMP previously).
+     * @return 若 “代码块” 成功释放则返回 YES，否则返回 NO （例如，该 “代码块” 先前可能未被用于创建 “方法”）
      */
-    OBJC_EXPORT BOOL imp_removeBlock(IMP anImp)
+    OBJC_EXPORT BOOL imp_removeBlock(IMP anImp);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
     /** 

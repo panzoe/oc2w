@@ -39,8 +39,8 @@
 //    #       include <libkern/OSAtomic.h>
 //    #   else
     /** 仅适配 WIN32 **/
-    #       define WINVER 0x0501		// 编译目标为 Windows XP 及持续版本
-    #       define _WIN32_WINNT 0x0501	// 编译目标为 Windows XP 及持续版本
+    #       define WINVER 0x0501		// 编译目标为 Windows XP 及后续版本
+    #       define _WIN32_WINNT 0x0501	// 编译目标为 Windows XP 及后续版本
     #       define WIN32_LEAN_AND_MEAN
             // workaround: windef.h 定义了 BOOL 等同于 int
     #       define BOOL WINBOOL

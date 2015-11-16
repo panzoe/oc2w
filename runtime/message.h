@@ -145,12 +145,10 @@
      * Use these functions to call methods that return floating-point values 
      * on the stack. 
      * Consult your local function call ABI documentation for details.
-     * 
-     * arm:    objc_msgSend_fpret not used
+     *
      * i386:   objc_msgSend_fpret used for `float`, `double`, `long double`.
      * x86-64: objc_msgSend_fpret used for `long double`.
      *
-     * arm:    objc_msgSend_fp2ret not used
      * i386:   objc_msgSend_fp2ret not used
      * x86-64: objc_msgSend_fp2ret used for `_Complex long double`.
      *

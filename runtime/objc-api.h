@@ -29,18 +29,18 @@
     #include <AvailabilityMacros.h>
     #include <TargetConditionals.h>
 
-    /** __has_feature __has_extension __has_attribute 均是 Clang 编译支援的函式风宏 **/
-    //#ifndef __has_feature
-    //#   define __has_feature(x) 0               // 兼容非 Clang 编译器环境
-    //#endif
-    //
-    //#ifndef __has_extension
-    //#   define __has_extension __has_feature    // 兼容 pre-3.0 编译器环境
-    //#endif
-    //
-    //#ifndef __has_attribute
-    //#   define __has_attribute(x) 0             // 兼容非 Clang 编译器环境
-    //#endif
+    /* __has_feature __has_extension __has_attribute 均是 Clang 编译支援的函式风宏 */
+#   ifndef __has_feature
+#       define __has_feature(x) 0               // 兼容非 Clang 编译器环境
+#   endif
+    
+#   ifndef __has_extension
+#       define __has_extension __has_feature    // 兼容 pre-3.0 编译器环境
+#   endif
+    
+#   ifndef __has_attribute
+#       define __has_attribute(x) 0             // 兼容非 Clang 编译器环境
+#   endif
 
 
     /*
@@ -57,36 +57,36 @@
     //#endif
 
     /** 强制使用 2.0 特性 **/
-    #define OBJC_API_VERSION 2
+#   define OBJC_API_VERSION 2
 
 
     /* OBJC_OLD_DISPATCH_PROTOTYPES == 0 enforces the rule that the dispatch 
      * functions must be cast to an appropriate function pointer type. */
     /** OBJC_OLD_DISPATCH_PROTOTYPES 值为 0 时，则遵循派发函式时必须将其包装为适当的函式指针类型的强制规则 **/
-    #if !defined(OBJC_OLD_DISPATCH_PROTOTYPES)
-    #   define OBJC_OLD_DISPATCH_PROTOTYPES 1
-    #endif
+#   if !defined(OBJC_OLD_DISPATCH_PROTOTYPES)
+#       define OBJC_OLD_DISPATCH_PROTOTYPES 1
+#   endif
 
 
     /* OBJC_ISA_AVAILABILITY: `isa` 未来将不可用或被标记为不推荐访问，直接访问该变量的代码编译时将会报警，但不影响继续编译 */
-    #if !defined(OBJC_ISA_AVAILABILITY)
+#   if !defined(OBJC_ISA_AVAILABILITY)
 //    #   if __OBJC2__
-    #       define OBJC_ISA_AVAILABILITY  __attribute__((deprecated))
+#           define OBJC_ISA_AVAILABILITY  __attribute__((deprecated))
 //    #   else
 //    #       define OBJC_ISA_AVAILABILITY  /* still available */
 //    #   endif
-    #endif
+#   endif
 
 
     /* OBJC2_UNAVAILABLE: 在 Objective-C 2.0 中不可用, 于 Leopard 系统中开始标记为不推荐，访问该属性的代码将无法继续编译 */
-    #if !defined(OBJC2_UNAVAILABLE)
+#   if !defined(OBJC2_UNAVAILABLE)
 //    #   if __OBJC2__
-    #       define OBJC2_UNAVAILABLE UNAVAILABLE_ATTRIBUTE
+#           define OBJC2_UNAVAILABLE UNAVAILABLE_ATTRIBUTE
 //    #   else
 //            /* plain C code also falls here, but this is close enough */
 //    #       define OBJC2_UNAVAILABLE __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_5,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0)
 //    #   endif
-    #endif
+#   endif
 
     /* OBJC_ARC_UNAVAILABLE: ARC 模式下不可用 （即使用编译选项 -fobjc-arc 时） */
     #if !defined(OBJC_ARC_UNAVAILABLE)

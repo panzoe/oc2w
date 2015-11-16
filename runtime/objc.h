@@ -101,37 +101,37 @@
 #   endif
 
 
-    /** 
-     * Returns the name of the method specified by a given selector.
-     * 
-     * @param sel A pointer of type \c SEL. Pass the selector whose name you wish to determine.
-     * 
-     * @return A C string indicating the name of the selector.
+    /**
+     * 返回给定 “方法选择器” 的名称
+     *
+     * @param sel SEL 类型指针，传递要检测的选择器
+     *
+     * @return 用于表示选择器名称的 C 语言风格字元串
      */
     OBJC_EXPORT const char *sel_getName(SEL sel);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
-    /** 
-     * Registers a method with the Objective-C runtime system, maps the method 
-     * name to a selector, and returns the selector value.
-     * 
-     * @param str A pointer to a C string. Pass the name of the method you wish to register.
-     * 
-     * @return A pointer of type SEL specifying the selector for the named method.
-     * 
-     * @note You must register a method name with the Objective-C runtime system to obtain the
-     *  method’s selector before you can add the method to a class definition. If the method name
-     *  has already been registered, this function simply returns the selector.
+    /**
+     * 向 Objective-C “运行时系统” 注册一个方法
+     *
+     * @param str 要注册的方法命名的 C 语言风格字元串指针
+     *
+     * @return 一个指向命名方法的选择器的 SEL 类型指针
+     *
+     * @note 方法经函式注册后，其名称会映射到对应的选择器，并作为函式返回值
+     *
+     * @note 在向 “类定义” 添加方法前，选择器必须已经用其名称向 Objective-C “运行时系统” 注册过了
+     *       如果方法名已被注册，此函式会直接返回该选择器
      */
     OBJC_EXPORT SEL sel_registerName(const char *str);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
-    /** 
-     * Returns the class name of a given object.
-     * 
-     * @param obj An Objective-C object.
-     * 
-     * @return The name of the class of which \e obj is an instance.
+    /**
+     * 获取对象的类名
+     *
+     * @param obj Objective-C 对象
+     *
+     * @return 实例对象的类名称
      */
     OBJC_EXPORT const char *object_getClassName(id obj);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
@@ -156,36 +156,35 @@
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
     /** 
-     * Identifies a selector as being valid or invalid.
+     * 检测选择器有效性
      * 
-     * @param sel The selector you want to identify.
+     * @param sel 要检测的选择器
      * 
-     * @return YES if selector is valid and has a function implementation, NO otherwise. 
+     * @return 若选择器有效会拥有一个函式实现则返回 YES，否则返回 NO
      * 
-     * @warning On some platforms, an invalid reference (to invalid memory addresses) can cause
-     *  a crash. 
+     * @warning 在部分平台上，一个无效引用（引用了无效的记忆体地址）会引发程式崩溃
      */
     OBJC_EXPORT BOOL sel_isMapped(SEL sel);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
-    /** 
-     * Registers a method name with the Objective-C runtime system.
-     * 
-     * @param str A pointer to a C string. Pass the name of the method you wish to register.
-     * 
-     * @return A pointer of type SEL specifying the selector for the named method.
-     * 
-     * @note The implementation of this method is identical to the implementation of \c sel_registerName.
-     * @note Prior to OS X version 10.0, this method tried to find the selector mapped to the given name
-     *  and returned \c NULL if the selector was not found. This was changed for safety, because it was
-     *  observed that many of the callers of this function did not check the return value for \c NULL.
+    /**
+     * 向 Objective-C “运行时系统” 注册一个方法名
+     *
+     * @param str 一个 C 语言风格字元串指针，用于传递要注册的方法名称
+     *
+     * @return  一个指向命名方法选择器的 SEL 类型指针
+     *
+     * @note 该方法实现已与函式名表意不同
+     * @note 此方法实现与 sel_registerName 函式实现是相同的
+     * @note 在 OS X 10.0 系统之前，此方法会尝试寻找此名称映射的选择器，如未找到则返回 NULL
+     *       这一转变是安全的，因为事实上多数调用的方法并不会对返回值进行 NULL检查
      */
     OBJC_EXPORT SEL sel_getUid(const char *str);
 //        __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 
-    // Obsolete ARC conversions. Deprecation forthcoming.
-    // Use CFBridgingRetain, CFBridgingRelease, and __bridge casts instead.
+    // 过时的 ARC 转换方法，即将弃用
+    // 使用 CFBridgingRetain，CFBridgingRelease 和 __bridge 作为替换方案
 
     typedef const void* objc_objectptr_t;
 
