@@ -10,3 +10,7 @@ libobjc2 源码学习笔记
 + [Objective-C的方法替换](http://blog.csdn.net/horkychen/article/details/8532087 "class_addMethod,class_replaceMethod,method_setImplementation")
 + [ObjectiveC基础－ivar是什么意思](http://blog.csdn.net/lvxiangan/article/details/18816481 "简要说明Objective-C运行时定义的几种重要的类型")
 + [respondsToSelector的相关使用](http://blog.csdn.net/chengyingzhilian/article/details/7930398 "respondsToSelector")
+
+# 官方资料
++ [Dynamic Library Programming Topics](https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/DynamicLibraries/000-Introduction/Introduction.html "介绍了动态库的相关技术")
++ [Framework Programming Guide](https://developer.apple.com/library/mac/documentation/MacOSX/Conceptual/BPFrameworks/Frameworks.html "介绍了 Framework 编程的相关知识")
