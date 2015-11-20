@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Apple Inc. All rights reserved.
+ * Copyright (c) 2012 Apple Inc.  All Rights Reserved.
  *
  * @APPLE_LICENSE_HEADER_START@
  *
@@ -21,22 +21,14 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
+#ifndef objc_object_common_mm
+#define objc_object_common_mm
 
-/***********************************************************************
-* Inlineable parts of NSObject / objc_object implementation
-**********************************************************************/
+inline bool
+objc_object::isClass()
+{
+    if (isTaggedPointer()) return false;
+    return ISA()->isMetaClass();
+}
 
-#   ifndef _OBJC_OBJCOBJECT_H_
-#       define _OBJC_OBJCOBJECT_H_
-
-#       include "objc-private.h"
-
-        // static function definition move to objc_object.h
-
-        // TAG_* marcos definitions move to objc_object.h
-
-        // SUPPORT_NONPOINTER_ISA version move to objc_object_snp_isa.mm
-
-        // not SUPPORT_NONPOINTER_ISA version move to objc_object_noraml_isa.mm
-
-#   endif // _OBJC_OBJECT_H_
+#endif /* objc_object_common_mm */
